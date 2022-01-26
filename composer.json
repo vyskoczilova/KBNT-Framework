@@ -1,0 +1,28 @@
+{
+  "name": "kbnt/framework",
+  "type": "library",
+  "description": "Kybernaut WordPress theme development framework",
+  "keywords": [
+    "wordpress",
+    "theme",
+    "framework"
+  ],
+  "homepage": "https://kybernaut.cz",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Karolína Vyskočilová",
+      "email": "karolina@kybernaut.cz",
+      "homepage": "https://kybernaut.cz",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "enshrined/svg-sanitize": "^0.13.3"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
+}
