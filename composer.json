@@ -20,9 +20,16 @@
   "require": {
     "enshrined/svg-sanitize": "^0.13.3"
   },
+  "require-dev": {
+    "phpunit/phpunit": "9.4.4",
+    "10up/wp_mock": "^0.4.2"
+  },
   "autoload": {
     "classmap": [
       "src/"
     ]
+  },
+  "scripts": {
+    "test:all": "vendor\\bin\\phpunit"
   }
 }
