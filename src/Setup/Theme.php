@@ -63,6 +63,20 @@ class Theme implements SetupInterface {
     private $disable_emojis;
 
     /**
+     * Disable editor full screen mode
+     * @var bool
+     */
+    private $disable_editor_fullscreen_mode;
+
+    /**
+     * Disable editor fullscreen mode
+     * @return void
+     */
+    public function disableEditorFullscreenMode() {
+        $this->disable_editor_fullscreen_mode = true;
+    }
+
+    /**
      * Disable auto update emails.
      * @return void
      */
@@ -95,6 +109,7 @@ class Theme implements SetupInterface {
     public function setThemeDefaults() {
 
         $this->disableAutoUpdateEmails();
+        $this->disableEditorFullscreenMode();
         $this->disableEmojis();
         $this->disableJqueryMigrate();
         $this->removeImageSize('1536x1536');
@@ -181,6 +196,15 @@ class Theme implements SetupInterface {
 
         if ($this->disable_emojis) {
             new DisableEmojis();
+        }
+
+        if ($this->disable_editor_fullscreen_mode && is_admin()) {
+            /**
+             * Source: https://www.alektra.net/how-to-automatically-disable-fullscreen-mode-in-wordpress/
+             */
+            add_action('enqueue_block_editor_assets', function () {
+                wp_add_inline_script('wp-blocks', "jQuery( window ).load(function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } });");
+            });
         }
 
         // Modify default sizes.
