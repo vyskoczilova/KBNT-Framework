@@ -39,7 +39,7 @@ class Block {
 
 		if ($blocks) {
 			foreach ($blocks as $block) {
-				if ($block['blockName'] == $block_name) {
+				if ($block['blockName'] === $block_name) {
 					return $block['attrs']['data'];
 				}
 			}
@@ -55,7 +55,7 @@ class Block {
     public static function hasHeadingLevel($block, $level = 1)
     {
 
-        if ($block['blockName'] === 'core/heading' && isset($block['attrs']['level']) && $block['attrs']['level'] === $level) {
+        if (isset($block['blockName']) && $block['blockName'] === 'core/heading' && isset($block['attrs']['level']) && $block['attrs']['level'] === $level) {
             return true;
         }
 

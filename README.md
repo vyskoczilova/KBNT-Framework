@@ -9,3 +9,7 @@ Tailor-made WordPress framework for themes made by Karolina Vyskočilová. Avail
 ## Notes
 
 * Plugin for drag & drop post type, taxonomy etc. ordering - [Simple Custom Post Order](https://cs.wordpress.org/plugins/simple-custom-post-order/)
+
+## PHP Unit
+
+vendor\\bin\\phpunit  --coverage-html coverage
