@@ -6,6 +6,9 @@
 * Disable editor fullscreen mode
 * Archive settings - show all, order by, archive only, don't show "archive" in title
 * Fix options
+* Gutenberg setup:
+  * Fix quotes
+  * Reveal Reusable posts in menu
 
 ## 0.1.0
 
