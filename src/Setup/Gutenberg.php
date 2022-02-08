@@ -20,6 +20,12 @@ class Gutenberg implements SetupInterface {
     private $show_reusable_blocks_in_menu;
 
     /**
+     * Disable directory search
+     * @var bool
+     */
+    private $disable_directory_search;
+
+    /**
      * Set KBNT theme defaults
      * @return void
      */
@@ -28,6 +34,7 @@ class Gutenberg implements SetupInterface {
 
         $this->fixQuotes();
         $this->showReusableBlocksInMenu();
+        $this->disableDirectorySearch();
 
     }
 
@@ -46,6 +53,19 @@ class Gutenberg implements SetupInterface {
                 $reusable_blocks = get_post_type_object('wp_block');
                 add_menu_page($reusable_blocks->labels->name, $reusable_blocks->labels->name, 'edit_posts', 'edit.php?post_type=wp_block', '', 'dashicons-block-default', 22);
             });
+        }
+
+        if ($this->disable_directory_search) {
+            /**
+             * Source: https://github.com/WordPress/gutenberg/issues/23961.
+             */
+            add_action(
+                'after_setup_theme',
+                function () {
+                    \remove_action('enqueue_block_editor_assets', 'wp_enqueue_editor_block_directory_assets');
+                    \remove_action('enqueue_block_editor_assets', 'gutenberg_enqueue_block_editor_assets_block_directory');
+                }
+            );
         }
 
     }
@@ -111,6 +131,20 @@ class Gutenberg implements SetupInterface {
     public function showReusableBlocksInMenu(bool $show_reusable_blocks_in_menu = true)
     {
         $this->show_reusable_blocks_in_menu = $show_reusable_blocks_in_menu;
+
+        return $this;
+    }
+
+    /**
+     * Set disable directory search
+     *
+     * @param  bool  $disable_directory_search  Disable directory search
+     *
+     * @return  self
+     */
+    public function disableDirectorySearch(bool $disable_directory_search = true)
+    {
+        $this->disable_directory_search = $disable_directory_search;
 
         return $this;
     }

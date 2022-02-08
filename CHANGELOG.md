@@ -9,6 +9,7 @@
 * Gutenberg setup:
   * Fix quotes
   * Reveal Reusable posts in menu
+  * Disable directory search
 
 ## 0.1.0
 
