@@ -40,9 +40,9 @@ class Options
                 $value = \maybe_unserialize($r->option_value);
 
                 if ($check_language_prefix) {
-                    $options[substr($r->option_name, strlen($prefix) + 3)] = $value;
+                    $options[substr($r->option_name, strlen($prefix) + 4)] = $value;
                 } else {
-                    $options[substr($r->option_name, strlen($prefix))] = $value;
+                    $options[substr($r->option_name, strlen($prefix) + 1)] = $value;
                 }
             }
 

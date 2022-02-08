@@ -5,6 +5,7 @@
 * FluentForms - do_shortcode in Terms & Conditions
 * Disable editor fullscreen mode
 * Archive settings - show all, order by, archive only, don't show "archive" in title
+* Fix options
 
 ## 0.1.0
 
