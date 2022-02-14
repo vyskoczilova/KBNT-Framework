@@ -19,6 +19,7 @@
   * Strings: startsWith, endsWidth
 * Theme - disable jQuery migrate only on frontend
 * ACF basic setup helper
+* ACF block classes helper
 
 ## 0.1.0 (2022-01-26)
 
