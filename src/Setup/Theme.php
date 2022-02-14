@@ -223,7 +223,7 @@ class Theme implements SetupInterface {
         // Disable jQuery migrate.
         if ($this->disable_jquery_migrate) {
             add_action('wp_default_scripts', function ($scripts) {
-                if (!empty($scripts->registered['jquery'])) {
+                if (!empty($scripts->registered['jquery']) && ! is_admin()) {
                     $scripts->registered['jquery']->deps = array_diff($scripts->registered['jquery']->deps, ['jquery-migrate']);
                 }
             });
@@ -319,9 +319,9 @@ class Theme implements SetupInterface {
      *
      * @return  self
      */
-    public function disableJqueryMigrate()
+    public function disableJqueryMigrate( bool $disable = true)
     {
-        $this->disable_jquery_migrate = true;
+        $this->disable_jquery_migrate = $disable;
 
         return $this;
     }

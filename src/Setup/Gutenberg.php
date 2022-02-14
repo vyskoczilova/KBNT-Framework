@@ -26,6 +26,18 @@ class Gutenberg implements SetupInterface {
     private $disable_directory_search;
 
     /**
+     * Remove FSE ID class
+     * @var bool
+     */
+    private $disable_render_layout_support;
+
+    /**
+     * Disable global styles
+     * @var bool
+     */
+    private $disable_global_styles;
+
+    /**
      * Set KBNT theme defaults
      * @return void
      */
@@ -35,6 +47,8 @@ class Gutenberg implements SetupInterface {
         $this->fixQuotes();
         $this->showReusableBlocksInMenu();
         $this->disableDirectorySearch();
+        $this->disableRenderLayoutSupport();
+        $this->setDisableGlobalStyles();
 
     }
 
@@ -66,6 +80,19 @@ class Gutenberg implements SetupInterface {
                     \remove_action('enqueue_block_editor_assets', 'gutenberg_enqueue_block_editor_assets_block_directory');
                 }
             );
+        }
+
+        if ($this->disable_render_layout_support) {
+            remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
+            remove_filter('render_block', 'gutenberg_render_layout_support_flag', 10, 2);
+        }
+
+        if ($this->disable_global_styles) {
+            // https://core.trac.wordpress.org/ticket/54941#comment:6
+            add_action('after_setup_theme', function () {
+                remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+                remove_action('wp_footer', 'wp_enqueue_global_styles', 1);
+            }, 10, 0);
         }
 
     }
@@ -145,6 +172,34 @@ class Gutenberg implements SetupInterface {
     public function disableDirectorySearch(bool $disable_directory_search = true)
     {
         $this->disable_directory_search = $disable_directory_search;
+
+        return $this;
+    }
+
+    /**
+     * Set remove FSE ID class
+     *
+     * @param  bool  $disable_render_layout_support  Remove FSE ID class
+     *
+     * @return  self
+     */
+    public function disableRenderLayoutSupport(bool $disable_render_layout_support = true)
+    {
+        $this->disable_render_layout_support = $disable_render_layout_support;
+
+        return $this;
+    }
+
+    /**
+     * Set disable global styles
+     *
+     * @param  bool  $disable_global_styles  Disable global styles
+     *
+     * @return  self
+     */
+    public function setDisableGlobalStyles(bool $disable_global_styles = true)
+    {
+        $this->disable_global_styles = $disable_global_styles;
 
         return $this;
     }
