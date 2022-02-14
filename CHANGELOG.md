@@ -14,9 +14,11 @@
   * Disable render global styles
 * FontAwesome new icons:
   * Download
-* WP helpers
-  * Get blog ID & title
+* Helpers
+  * WP: get blog ID, get blog title
+  * Strings: startsWith, endsWidth
 * Theme - disable jQuery migrate only on frontend
+* ACF basic setup helper
 
 ## 0.1.0 (2022-01-26)
 
