@@ -1,13 +1,8 @@
 # Changelog
 
-## 0.2.0
+## 0.2.0 (2022-02-15)
 
-### Breaking
-
-* addImageSize -> move name to the last parameter
-
-### Non breaking
-
+* ⚠ addImageSize -> move name to the last parameter
 * FluentForms - do_shortcode in Terms & Conditions
 * Disable editor fullscreen mode
 * Archive settings
