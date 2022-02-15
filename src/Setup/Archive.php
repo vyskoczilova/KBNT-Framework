@@ -31,6 +31,13 @@ class Archive implements SetupInterface {
     private $order_by = [];
 
     /**
+     * Add one more post to is_home page
+     * @var int
+     * @see https://sridharkatakam.com/changing-posts-per-page-first-page-without-breaking-pagination-wordpress/
+     */
+    private $is_home_load_more_posts;
+
+    /**
      * Initialize
      * @return void
      */
@@ -57,24 +64,57 @@ class Archive implements SetupInterface {
             });
         }
 
-        if (!empty($this->display_all) || !empty($this->order_by) ) {
+        if (!empty($this->display_all) || !empty($this->order_by) || $this->is_home_load_more_posts !== null ) {
             add_action('pre_get_posts', function ($query) {
-                if (!is_admin() && $query->is_main_query()) {
-                    if ($this->display_all && is_post_type_archive($this->display_all)) {
-                        $query->set('posts_per_page', -1);
+                // Don't modify the admin and only modify main query
+                if (is_admin() || $query->is_main_query()) {
+                    return;
+                }
+                if ($this->display_all && is_post_type_archive($this->display_all)) {
+                    $query->set('posts_per_page', -1);
+                }
+                foreach ($this->order_by as $ab) {
+                    if (is_post_type_archive($ab['post_type'])) {
+                        $query->set('orderby', [$ab['by'] => $ab['how']]);
                     }
-                    foreach ($this->order_by as $ab) {
-                        if (is_post_type_archive($ab['post_type'])) {
-                            $query->set('orderby', [$ab['by'] => $ab['how']]);
-                        }
+                }
+
+                if ($this->is_home_load_more_posts !== null) {
+
+                    // Only on blog home
+                    if (!$query->is_home()) {
+                        return;
                     }
-                    // foreach ($this->tax_by as $tb) {
-                    //     if (is_tax($tb['taxonomy'])) {
-                    //         $query->set('orderby', [$tb['by'] => $tb['how']]);
-                    //     }
-                    // }
+                    $posts_per_page = get_option('posts_per_page');
+
+                    // Handle pagination
+                    if ($query->is_paged) {
+
+                        // Manually determine page query offset (offset + current page (minus one) x posts per page)
+
+                        // TODO, is this magic?
+                        $page_offset = $this->is_home_load_more_posts + (($query->query_vars['paged'] - 1) * $posts_per_page);
+
+                        // Apply adjust page offset
+                        $query->set('offset', $page_offset);
+
+                    } else {
+                        // This is the first page. Set a different number for posts per page
+                        $query->set('posts_per_page', $this->is_home_load_more_posts + $posts_per_page);
+                    }
+
                 }
             });
+        }
+
+        if ($this->is_home_load_more_posts !== null) {
+            // Adujust offset pagination.
+            add_filter('found_posts', function ($found_posts, $query) {
+                if ($query->is_home() && is_main_query()) {
+                    return $found_posts - $this->is_home_load_more_posts;
+                }
+                return $found_posts;
+            }, 1, 2);
         }
 
     }
@@ -151,6 +191,21 @@ class Archive implements SetupInterface {
             'by' => $by,
             'how' => $how
         ];
+    }
+
+    /**
+     * Load one more post on first page of is_home()
+     * @param bool $one_more_post Load one more post?
+     * @return $this
+     */
+    /**
+     * Load  more post on first page of is_home()
+     * @param int $number_of_posts_to_add Number of posts to add
+     * @return $this
+     */
+    public function loadMorePostOnIsHome(int $number_of_posts_to_add = 1 ){
+        $this->is_home_load_more_posts = $number_of_posts_to_add;
+        return $this;
     }
 
 }

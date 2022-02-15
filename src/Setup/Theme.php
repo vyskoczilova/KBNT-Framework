@@ -137,9 +137,12 @@ class Theme implements SetupInterface {
      * @param bool $crop Crop in px.
      * @return void
      */
-    public function addImageSize(string $menu_name, string $slug, int $width, $height = 0, $crop = false)
+    public function addImageSize(string $slug, int $width, $height = 0, $crop = false, string $menu_name = null)
     {
-        $this->image_sizes_add[$menu_name] = [$slug, $width, $height, $crop];
+        if ($menu_name) {
+            $this->image_sizes_add[$menu_name] = [$slug, $width, $height, $crop];
+        }
+        $this->image_sizes_add[] = [$slug, $width, $height, $crop];
     }
 
     /**
@@ -302,7 +305,9 @@ class Theme implements SetupInterface {
 
                     $additional_sizes = [];
                     foreach($this->image_sizes_add as $name => $atts) {
-                        $additional_sizes[$atts[0]] = $name;
+                        if (\is_string($name)) {
+                            $additional_sizes[$atts[0]] = $name;
+                        }
                     }
                     return array_merge($sizes, $additional_sizes);
 

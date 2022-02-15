@@ -5,6 +5,13 @@ namespace KBNT\Framework\ACF;
 class Helpers
 {
 
+    /**
+     * Prepare classes for block rendering
+     *
+     * @param array $block Block info passed from ACF.
+     * @param array $blacklist Classes to blacklist if any.
+     * @return string
+     */
     public static function prepareBlockClasses($block, $blacklist = []) {
 
         // Get classes.

@@ -2,9 +2,20 @@
 
 ## 0.2.0
 
+### Breaking
+
+* addImageSize -> move name to the last parameter
+
+### Non breaking
+
 * FluentForms - do_shortcode in Terms & Conditions
 * Disable editor fullscreen mode
-* Archive settings - show all, order by, archive only, don't show "archive" in title
+* Archive settings
+  * Show all
+  * Order by
+  * Archive only
+  * Don't show "archive" in title
+  * Load X more posts on is_home() first page
 * Fix options
 * Gutenberg setup:
   * Fix quotes
@@ -20,6 +31,7 @@
 * Theme - disable jQuery migrate only on frontend
 * ACF basic setup helper
 * ACF block classes helper
+
 
 ## 0.1.0 (2022-01-26)
 
