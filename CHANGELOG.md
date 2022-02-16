@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+* ReflectionPropertyExtractor.php
+* Fix: Archive:Load X more posts on is_home() first page
+
 ## 0.2.0 (2022-02-15)
 
 * ⚠ addImageSize -> move name to the last parameter

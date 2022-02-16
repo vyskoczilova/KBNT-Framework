@@ -67,7 +67,7 @@ class Archive implements SetupInterface {
         if (!empty($this->display_all) || !empty($this->order_by) || $this->is_home_load_more_posts !== null ) {
             add_action('pre_get_posts', function ($query) {
                 // Don't modify the admin and only modify main query
-                if (is_admin() || $query->is_main_query()) {
+                if (is_admin() || ! $query->is_main_query()) {
                     return;
                 }
                 if ($this->display_all && is_post_type_archive($this->display_all)) {
@@ -98,6 +98,7 @@ class Archive implements SetupInterface {
                         // Apply adjust page offset
                         $query->set('offset', $page_offset);
 
+
                     } else {
                         // This is the first page. Set a different number for posts per page
                         $query->set('posts_per_page', $this->is_home_load_more_posts + $posts_per_page);
@@ -107,15 +108,15 @@ class Archive implements SetupInterface {
             });
         }
 
-        if ($this->is_home_load_more_posts !== null) {
-            // Adujust offset pagination.
-            add_filter('found_posts', function ($found_posts, $query) {
-                if ($query->is_home() && is_main_query()) {
-                    return $found_posts - $this->is_home_load_more_posts;
-                }
-                return $found_posts;
-            }, 1, 2);
-        }
+        // if ($this->is_home_load_more_posts !== null) {
+        //     // Adujust offset pagination.
+        //     add_filter('found_posts', function ($found_posts, $query) {
+        //         if ($query->is_home() && is_main_query() ) {
+        //             return $found_posts + $this->is_home_load_more_posts;
+        //         }
+        //         return $found_posts;
+        //     }, 1, 2);
+        // }
 
     }
 

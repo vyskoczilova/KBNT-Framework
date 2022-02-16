@@ -35,7 +35,7 @@ class FluentForms implements SetupInterface {
      *
      * @return  self
      */
-    public function setDoShortcodeTnc(bool $do_shortcode_tnc)
+    public function setDoShortcodeTnc(bool $do_shortcode_tnc = true )
     {
         $this->do_shortcode_tnc = $do_shortcode_tnc;
 
