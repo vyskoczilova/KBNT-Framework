@@ -108,15 +108,21 @@ class Archive implements SetupInterface {
             });
         }
 
-        // if ($this->is_home_load_more_posts !== null) {
-        //     // Adujust offset pagination.
-        //     add_filter('found_posts', function ($found_posts, $query) {
-        //         if ($query->is_home() && is_main_query() ) {
-        //             return $found_posts + $this->is_home_load_more_posts;
-        //         }
-        //         return $found_posts;
-        //     }, 1, 2);
-        // }
+        if ($this->is_home_load_more_posts !== null) {
+            // Adujust offset pagination.
+            add_filter('found_posts', function ($found_posts, $query) {
+                if ($query->is_home() && is_main_query() ) {
+                    if ($query->is_paged) {
+                        return $found_posts - $this->is_home_load_more_posts;
+                    } else {
+                        $posts_per_page = get_option('posts_per_page');
+                        $first_page = $posts_per_page + $this->is_home_load_more_posts;
+                        return ceil(($found_posts - $first_page) / $posts_per_page) * $first_page + 1;
+                    }
+                }
+                return $found_posts;
+            }, 1, 2);
+        }
 
     }
 
