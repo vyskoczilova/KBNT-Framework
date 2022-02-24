@@ -38,6 +38,12 @@ class Gutenberg implements SetupInterface {
     private $disable_global_styles;
 
     /**
+     * Don't render empty paragraphs
+     * @var bool
+     */
+    private $disable_empty_paragraph_blocks;
+
+    /**
      * Set KBNT theme defaults
      * @return void
      */
@@ -48,7 +54,8 @@ class Gutenberg implements SetupInterface {
         $this->showReusableBlocksInMenu();
         $this->disableDirectorySearch();
         $this->disableRenderLayoutSupport();
-        $this->setDisableGlobalStyles();
+        $this->disableGlobalStyles();
+        $this->disableEmptyParagraphs();
 
     }
 
@@ -93,6 +100,15 @@ class Gutenberg implements SetupInterface {
                 remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
                 remove_action('wp_footer', 'wp_enqueue_global_styles', 1);
             }, 10, 0);
+        }
+
+        if ($this->disable_empty_paragraph_blocks) {
+            add_filter('render_block_core/paragraph', function ($block_content, $block) {
+                $cleaned_content = preg_replace('/\s+/', '', $block_content);
+                if (trim($cleaned_content) !== '<p></p>') {
+                    return $block_content;
+                }
+            }, 10, 2);
         }
 
     }
@@ -197,9 +213,23 @@ class Gutenberg implements SetupInterface {
      *
      * @return  self
      */
-    public function setDisableGlobalStyles(bool $disable_global_styles = true)
+    public function disableGlobalStyles(bool $disable_global_styles = true)
     {
         $this->disable_global_styles = $disable_global_styles;
+
+        return $this;
+    }
+
+    /**
+     * Set don't render empty paragraphs
+     *
+     * @param  bool  $disable_empty_pragraphs  Don't render empty paragraphs
+     *
+     * @return  self
+     */
+    public function disableEmptyParagraphs(bool $disable_empty_pragraphs = true)
+    {
+        $this->disable_empty_paragraph_blocks = $disable_empty_pragraphs;
 
         return $this;
     }

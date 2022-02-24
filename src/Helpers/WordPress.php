@@ -2,7 +2,7 @@
 
 namespace KBNT\Framework\Helpers;
 
-class WP {
+class WordPress {
 
     /**
      * Get blog page archive ID
@@ -18,6 +18,14 @@ class WP {
      */
     public static function getBlogArchiveTitle() {
         return \get_the_title(self::getBlogArchiveID());
+    }
+
+    /**
+     * Get blog page archive URL
+     * @return string
+     */
+    public static function getBlogArchiveUrl() {
+        return \get_the_permalink(self::getBlogArchiveID());
     }
 
 }
