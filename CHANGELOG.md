@@ -1,9 +1,9 @@
 # Changelog
 
-## 0.3.0
+## 0.3.0 (2022-03-07)
 
 * ReflectionPropertyExtractor.php
-* Fix: Archive:Load X more posts on is_home() first page
+* Fix: Archive: Load X more posts on is_home() first page
 * Gutenberg: disable empty paragraph blocks
 
 ## 0.2.0 (2022-02-15)
