@@ -72,7 +72,7 @@ class BlockSupports implements ArrayInterface {
      *
      * @return  self
      */
-    public function setExperimentalJSX(bool $__experimental_jsx)
+    public function setExperimentalJSX(bool $__experimental_jsx = true)
     {
         $this->__experimental_jsx = $__experimental_jsx;
 
@@ -84,7 +84,7 @@ class BlockSupports implements ArrayInterface {
 	 * @param bool $anchor Anchors let you link directly to a specific block on a page. This property adds a field to define an id for the block and a button to copy the direct link.
 	 * @return $this
 	 */
-	public function setAnchor(bool $anchor) {
+	public function setAnchor(bool $anchor = true) {
 		$this->anchor = $anchor;
 		return $this;
 	}

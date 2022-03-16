@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+* Fix: ACF supports - add bool
+* New svg in FA icons
+
 ## 0.3.0 (2022-03-07)
 
 * ReflectionPropertyExtractor.php

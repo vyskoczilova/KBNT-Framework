@@ -521,6 +521,96 @@ class FontAwesomeIcons {
     }
 
     /**
+     * get Icons
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string
+     */
+    public function getIcons($style = null) {
+
+        // Load default style if not set.
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="' . $this->color . '" d="M144 343.78a48 48 0 1 0 48 48 48 48 0 0 0-48-48zM101.74 213a37 37 0 0 0 52.36 0l78.56-78.44A79.06 79.06 0 0 0 227 17.49c-28.08-23.13-69.54-22.82-99-.86-29.45-22-71-22.3-99.05.89a79.11 79.11 0 0 0-5.77 117.08zM59.42 54.53A29.54 29.54 0 0 1 78.35 48 35.08 35.08 0 0 1 103 58.32l25 24.89 24.93-24.89c12.25-12.15 31.43-13.83 43.58-3.82a31.09 31.09 0 0 1 2.31 46.15l-70.85 70.71-70.87-70.69a31.13 31.13 0 0 1 2.32-46.14zm337.93 305.24 32.27-69.89a24 24 0 1 0-43.54-20.12l-63.7 138h109.27l-36.92 68.58A24 24 0 1 0 437 499.05l75-139.28zm-141.44-72h-27.42l-7.09-14.17a27.36 27.36 0 0 0-25.64-17.76H92.08a27.39 27.39 0 0 0-25.65 17.76l-7 14.21H32a32 32 0 0 0-32 32V480a32 32 0 0 0 32 32h223.91a32 32 0 0 0 32-32V319.79a32 32 0 0 0-32-31.98zm-16 176.23H48V335.79h41.22l13.21-26.73 2.57-5.26h77.83l2.69 5.4 13.24 26.59h41.13zm112-256V68.24L463.83 51v78.58a84 84 0 0 0-16-1.69c-35.34 0-64 21.47-64 48s28.64 48 64 48 64-21.48 64-48V32c0-17.9-13.54-32-29.64-32a28.08 28.08 0 0 0-4.26.33L329.39 23.17c-14.63 2.25-25.5 15.74-25.5 31.66V161.6a83.25 83.25 0 0 0-16-1.7c-35.33 0-64 21.55-64 48.13s28.64 48.13 64 48.13 63.98-21.55 63.98-48.16z"/></svg>';
+        }
+    }
+
+    /**
+     * get browser
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string
+     */
+    public function getBrowser($style = null) {
+
+        // Load default style if not set.
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="' . $this->color . '" d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM48 92c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V92zm416 334c0 3.3-2.7 6-6 6H54c-3.3 0-6-2.7-6-6V168h416v258zm0-310c0 6.6-5.4 12-12 12H172c-6.6 0-12-5.4-12-12V92c0-6.6 5.4-12 12-12h280c6.6 0 12 5.4 12 12v24z"/></svg>';
+        }
+    }
+
+    /**
+     * get newspaper
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string
+     */
+    public function getNewspaper($style = null) {
+
+        // Load default style if not set.
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="' . $this->color . '" d="M552 64H112c-20.858 0-38.643 13.377-45.248 32H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h496c13.255 0 24-10.745 24-24V88c0-13.255-10.745-24-24-24zM48 392V144h16v248c0 4.411-3.589 8-8 8s-8-3.589-8-8zm480 8H111.422c.374-2.614.578-5.283.578-8V112h416v288zM172 280h136c6.627 0 12-5.373 12-12v-96c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v96c0 6.627 5.373 12 12 12zm28-80h80v40h-80v-40zm-40 140v-24c0-6.627 5.373-12 12-12h136c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H172c-6.627 0-12-5.373-12-12zm192 0v-24c0-6.627 5.373-12 12-12h104c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H364c-6.627 0-12-5.373-12-12zm0-144v-24c0-6.627 5.373-12 12-12h104c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H364c-6.627 0-12-5.373-12-12zm0 72v-24c0-6.627 5.373-12 12-12h104c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H364c-6.627 0-12-5.373-12-12z"/></svg>';
+        }
+    }
+
+    /**
+     * get align left
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string
+     */
+    public function getAlignLeft($style = null) {
+
+        // Load default style if not set.
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="' . $this->color . '" d="M12.83 344h262.34A12.82 12.82 0 0 0 288 331.17v-22.34A12.82 12.82 0 0 0 275.17 296H12.83A12.82 12.82 0 0 0 0 308.83v22.34A12.82 12.82 0 0 0 12.83 344zm0-256h262.34A12.82 12.82 0 0 0 288 75.17V52.83A12.82 12.82 0 0 0 275.17 40H12.83A12.82 12.82 0 0 0 0 52.83v22.34A12.82 12.82 0 0 0 12.83 88zM432 168H16a16 16 0 0 0-16 16v16a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-16a16 16 0 0 0-16-16zm0 256H16a16 16 0 0 0-16 16v16a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-16a16 16 0 0 0-16-16z"/></svg>';
+        }
+    }
+
+    /**
+     * get photo video
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string
+     */
+    public function getPhotoVideo($style = null) {
+
+        // Load default style if not set.
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="' . $this->color . '" d="M608 0H160c-17.67 0-32 13.13-32 29.33V112h48V48h48v64h48V48h224v304h112c17.67 0 32-13.13 32-29.33V29.33C640 13.13 625.67 0 608 0zm-16 304h-48v-56h48zm0-104h-48v-48h48zm0-96h-48V48h48zM128 320a32 32 0 1 0-32-32 32 32 0 0 0 32 32zm288-160H32a32 32 0 0 0-32 32v288a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32zm-16 240L299.31 299.31a16 16 0 0 0-22.62 0L176 400l-36.69-36.69a16 16 0 0 0-22.62 0L48 432V208h352z"/></svg>';
+        }
+    }
+
+    /**
      * Rectangle wide
      * @see https://fontawesome.com/v5.15/icons/rectangle-wide?style=regular
      * @param string $style Style of icon (regulat|solid|light|duotone).
