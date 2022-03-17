@@ -63,7 +63,14 @@ class Blocks implements SetupInterface{
         $defaults = $this->blocksDefaults->getParameters();
         $defaults_supports = isset($defaults['supports']) ? $defaults['supports'] : [];
 
-        foreach ($this->blocks as $rb) {
+        // Order block by title.
+        $ordered = [];
+        foreach ($this->blocks as $block) {
+            $ordered[sanitize_title($block->getTitle())] = $block;
+        }
+        ksort($ordered);
+
+        foreach ($ordered as $rb) {
 
             // Parse with default values.
             $register = $rb->getParameters();

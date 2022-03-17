@@ -416,4 +416,14 @@ class Block extends Data implements ArrayInterface {
 
         return $array;
     }
+
+    /**
+     * Get title
+     *
+     * @return  string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 }

@@ -5,6 +5,7 @@
 * Fix: ACF supports - add bool
 * New: SVG in FA icons
 * New: Register block patterns
+* Sort registered ACF blocks by title.
 
 ## 0.3.0 (2022-03-07)
 

@@ -178,6 +178,11 @@ class BlockPattern {
 
     }
 
+    /**
+     * Clean pattern
+     * @param string $pattern_content Pattern content from Gutenberg.
+     * @return string
+     */
     private function cleanPattern($pattern_content) {
 
         $pattern_content = str_replace(["\n", "\r", "\t"], '', $pattern_content); // https://github.com/WordPress/gutenberg/issues/32139#issuecomment-849906816
