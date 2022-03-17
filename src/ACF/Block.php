@@ -395,6 +395,22 @@ class Block extends Data implements ArrayInterface {
 		return $this;
 	}
 
+	/**
+	 * Shorthand to add only data and set mode to preview.
+	 * @param array $example_data Example data.
+	 * @return $this
+	 */
+	public function setExampleData(array $example_data = []) {
+
+        $example = [ 'attributes' => [
+            'mode' => 'preview',
+            'data' => $example_data
+        ]];
+		$this->example = $example;
+
+		return $this;
+	}
+
     /**
      * Construct array from class properties
      * @return array

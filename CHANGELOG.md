@@ -3,9 +3,11 @@
 ## 0.3.1
 
 * Fix: ACF supports - add bool
-* New: SVG in FA icons
 * New: Register block patterns
-* Sort registered ACF blocks by title.
+* Additional SVGs in FA icons
+* ACF\Blocks:
+  * Sort registered blocks by title
+  * Add shorthand - setExampleData()
 
 ## 0.3.0 (2022-03-07)
 
