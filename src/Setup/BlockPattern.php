@@ -139,7 +139,13 @@ class BlockPattern {
      */
     public function setCategories(array $categories)
     {
-        $this->categories = $categories;
+        // Human readable names can be used, so sanitize first.
+        $sanitized = [];
+        foreach ($categories as $c) {
+             $sanitized[] = sanitize_title($c);
+        }
+
+        $this->categories = $sanitized;
 
         return $this;
     }

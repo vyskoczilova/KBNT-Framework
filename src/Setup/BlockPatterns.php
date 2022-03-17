@@ -16,9 +16,9 @@ class BlockPatterns implements SetupInterface
 
     /**
      * Default category
-     * @var string
+     * @var array
      */
-    private $defaultCategory;
+    private $defaultCategories;
 
     /**
      * Patterns
@@ -56,8 +56,8 @@ class BlockPatterns implements SetupInterface
         $pattern->setTitle($title);
         $pattern->setContent($content);
 
-        if ($this->defaultCategory) {
-            $pattern->setCategories([$this->defaultCategory]);
+        if (!empty($this->defaultCategories)) {
+            $pattern->setCategories($this->defaultCategories);
         }
 
         $this->patterns[] = $pattern;
@@ -107,15 +107,15 @@ class BlockPatterns implements SetupInterface
     }
 
     /**
-     * Set default category
+     * Set default categories
      *
-     * @param  string  $defaultCategory  Default category
+     * @param  array  $defaultCategories  Default categories
      *
      * @return  self
      */
-    public function setDefaultCategory(string $defaultCategory)
+    public function setDefaultCategories(array $defaultCateogires)
     {
-        $this->defaultCategory = sanitize_title($defaultCategory);
+        $this->defaultCategories = $defaultCateogires;
 
         return $this;
     }
