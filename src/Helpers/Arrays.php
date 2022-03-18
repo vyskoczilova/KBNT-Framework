@@ -20,12 +20,25 @@ class Arrays {
      * @param array $array Array.
      * @param mixed $old_value Old value.
      * @param mixed $new_value New value.
-     * @return mixed
+     * @return array
      */
     public static function replaceValue($array, $old_value, $new_value) {
         $key = \array_search($old_value, $array, true);
         if ($key) {
             $array = \array_replace($array, [$key => $new_value]);
+        }
+        return $array;
+    }
+
+    /**
+     * Remove value in array
+     * @param array $array Array.
+     * @param mixed $value Value to remove.
+     * @return array
+     */
+    public static function removeValue($array, $value) {
+        if (($key = array_search($value, $array)) !== false) {
+            unset($array[$key]);
         }
         return $array;
     }

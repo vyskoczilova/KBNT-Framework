@@ -8,6 +8,8 @@
 * ACF\Blocks:
   * Sort registered blocks by title
   * Add shorthand - setExampleData()
+  * TemplateLocks
+* Arrays remove by value
 
 ## 0.3.0 (2022-03-07)
 

@@ -104,6 +104,12 @@ class CustomPost extends PostTaxonomy
 	private $template;
 
 	/**
+	 * Template lock
+	 * @var string
+	 */
+	private $template_lock;
+
+	/**
 	 * Set label
 	 *
 	 * @param  string  $label  Name of the post type shown in the menu. Usually plural. Default is value of $labels['name'].
@@ -344,5 +350,19 @@ class CustomPost extends PostTaxonomy
 		}
 
 		return $parameters;
+	}
+
+	/**
+	 * Set template lock
+	 *
+	 * @param  string  $template_lock  Template lock.
+	 *
+	 * @return  self
+	 */
+	public function setTemplateLock(string $template_lock)
+	{
+		$this->template_lock = $template_lock;
+
+		return $this;
 	}
 }
