@@ -10,6 +10,7 @@
   * Add shorthand - setExampleData()
   * TemplateLocks
 * Arrays remove by value
+* Save block helpers
 
 ## 0.3.0 (2022-03-07)
 
