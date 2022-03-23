@@ -11,6 +11,7 @@
   * TemplateLocks
 * Arrays remove by value
 * Save block helpers
+* Unregister taxonomy
 
 ## 0.3.0 (2022-03-07)
 

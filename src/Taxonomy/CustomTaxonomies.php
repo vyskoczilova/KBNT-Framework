@@ -12,6 +12,12 @@ class CustomTaxonomies implements SetupInterface {
 	 */
 	private $taxonomies = [];
 
+    /**
+	 * taxonomies to unregister
+	 * @var array
+	 */
+	private $unregister_taxonomies_for_object_type = [];
+
 	/**
 	 * Initialize.
 	 * @return bool
@@ -21,9 +27,11 @@ class CustomTaxonomies implements SetupInterface {
 		// Register post types.
 		add_action('init', function() {
 			foreach ($this->taxonomies as $slug => $tax) {
-				$info = $tax['args']->getParameters();
 				\register_taxonomy($slug, $tax['post_types'], $tax['args']->getParameters());
 			}
+            foreach($this->unregister_taxonomies_for_object_type as $ut) {
+                \unregister_taxonomy_for_object_type(...$ut);
+            }
 		}, 10, 1);
 	}
 
@@ -43,5 +51,18 @@ class CustomTaxonomies implements SetupInterface {
 
 		return $last['args'];
 	}
+
+    /**
+     * Remove Taxonomy from Post Type
+     * @param string $taxonomy Taxonomy to unregister.
+     * @param string $post_type Post type.
+     * @return self
+     */
+    public function removeTaxonomyFromPostType($taxonomy, $post_type)
+    {
+        $this->unregister_taxonomies_for_object_type[] = [$taxonomy, $post_type];
+
+        return $this;
+    }
 
 }
