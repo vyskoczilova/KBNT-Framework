@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1
+## 0.3.1 (2022-03-28)
 
 * Fix: ACF supports - add bool
 * New: Register block patterns
