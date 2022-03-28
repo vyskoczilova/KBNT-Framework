@@ -12,6 +12,7 @@
 * Arrays remove by value
 * Save block helpers
 * Unregister taxonomy
+* Fix and simplify ACF options loading function
 
 ## 0.3.0 (2022-03-07)
 

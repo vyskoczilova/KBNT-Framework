@@ -19,6 +19,11 @@ class Options
         $options = [];
         $image_ids = [];
 
+        // Fix wrong prefix format - missing or not missing underscore
+        if (substr($prefix, '-1') !== '_') {
+            $prefix .= '_';
+        }
+
         // WPML compatibility.
         $check_language_prefix = false;
         if (defined('ICL_LANGUAGE_CODE')) {
@@ -28,7 +33,7 @@ class Options
                 $prefix = str_replace('options_', 'options_' . $check_language_prefix . '_', $prefix);
             }
         }
-        $sql_results = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE '{$prefix}_%'");
+        $sql_results = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE '{$prefix}%'");
 
 
         if ($sql_results) {
@@ -38,12 +43,7 @@ class Options
 
                 // Unserilize the value.
                 $value = \maybe_unserialize($r->option_value);
-
-                if ($check_language_prefix) {
-                    $options[substr($r->option_name, strlen($prefix) + 4)] = $value;
-                } else {
-                    $options[substr($r->option_name, strlen($prefix) + 1)] = $value;
-                }
+                $options[substr($r->option_name, strlen($prefix))] = $value;
             }
 
             // Retrieve attachment IDS.
