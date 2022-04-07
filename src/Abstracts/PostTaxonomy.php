@@ -222,7 +222,7 @@ abstract class PostTaxonomy extends Data implements ArrayInterface {
 	/**
 	 * Set rewrite
 	 *
-	 * @param  array  $rewrite  Rewrite
+	 * @param  array|bool  $rewrite  Rewrite
 	 * @see https://developer.wordpress.org/reference/functions/register_post_type/#rewrite
 	 * @return  self
 	 */
