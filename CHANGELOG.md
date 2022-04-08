@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 (2022-04-08)
+
+* Allow styles to be loaded conditionaly
+* Fix typo in doc comment
+
 ## 0.3.1 (2022-03-28)
 
 * Fix: ACF supports - add bool
