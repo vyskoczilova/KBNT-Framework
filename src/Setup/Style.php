@@ -40,4 +40,15 @@ class Style extends StyleScript {
         return [$this->getHandle(), $this->getSrc(), $this->deps, $this->getVersion(), $this->media];
     }
 
+    /**
+     * Enqueue & localize
+     * @return void
+     */
+    public function enqueue()
+    {
+        if ($this->canLoad()) {
+            \wp_enqueue_style(...$this->getParameters());
+        }
+    }
+
 }

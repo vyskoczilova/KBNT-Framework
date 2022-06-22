@@ -40,7 +40,7 @@ class Blocks {
 
     /**
      * Return all registered blocks by namespace aka all core blocks etc.
-     * @param strung $namespace
+     * @param string $namespace
      * @return array
      *
      * @see https://github.com/WordPress/gutenberg/issues/12219

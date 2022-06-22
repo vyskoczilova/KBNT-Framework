@@ -55,12 +55,29 @@ abstract class StyleScript extends Files implements ArrayInterface {
     protected $directory_uri;
 
     /**
+     * Set conditions
+     * @var array
+     */
+    protected $conditions;
+
+    /**
      * Construct
      * @return void
      */
     public function __construct() {
         $this->directory = get_template_directory();
         $this->directory_uri = get_template_directory_uri();
+    }
+
+    /**
+     * Set conditions to enqueue
+     * @param callable $conditions Array of callbacks
+     * @return $this
+     */
+    public function setCondition($condition)
+    {
+        $this->conditions[] = is_string($condition) ? [$condition] : $condition;
+        return $this;
     }
 
     /**
@@ -170,6 +187,28 @@ abstract class StyleScript extends Files implements ArrayInterface {
         }
 
         return $this->version;
+    }
+
+
+    /**
+     * Test conditions if can load.
+     * @return bool
+     */
+    protected function canLoad()
+    {
+        if (empty($this->conditions)) {
+            return true;
+        }
+
+        foreach ($this->conditions as $c) {
+            if (\is_callable($c[0])) {
+                if (call_user_func(...$c)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

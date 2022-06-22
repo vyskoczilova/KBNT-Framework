@@ -215,9 +215,10 @@ class Scripts implements SetupInterface {
      * @return void
      */
     private function helperRegisterStylesScripts($styles, $scripts) {
+
         // Styles.
         foreach ($styles as $style) {
-            \wp_enqueue_style(...$style->getParameters());
+            $style->enqueue();
         }
 
         // Scripts.

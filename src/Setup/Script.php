@@ -24,12 +24,6 @@ class Script extends StyleScript {
     private $localize;
 
     /**
-     * Set conditions
-     * @var array
-     */
-    private $conditions;
-
-    /**
      * Set in footer
      *
      * @param  bool  $in_footer  In footer
@@ -58,16 +52,6 @@ class Script extends StyleScript {
     }
 
     /**
-     * Set conditions to enqueue
-     * @param callable $conditions Array of callbacks
-     * @return $this
-     */
-    public function setCondition($condition) {
-        $this->conditions[] = is_string($condition) ? [$condition] : $condition;
-        return $this;
-    }
-
-    /**
      * Get WP friendly array of parameters
      * @return array
      */
@@ -77,31 +61,11 @@ class Script extends StyleScript {
     }
 
     /**
-     * Test conditions if can load.
-     * @return bool
-     */
-    private function canLoad() {
-        if (empty($this->conditions)) {
-            return true;
-        }
-
-        foreach ($this->conditions as $c) {
-            if (\is_callable($c[0])) {
-                if (call_user_func(...$c)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Enqueue & localize
      * @return void
      */
     public function enqueueScript() {
-        if ($this->canLoad()){
+        if ($this->canLoad()) {
             \wp_enqueue_script(...$this->getParameters());
             if ($this->localize) {
                 wp_localize_script($this->getHandle(), 'props', $this->localize);
