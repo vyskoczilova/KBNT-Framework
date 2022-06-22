@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 ()
+
+* Styles & scripts enqueuing
+* Disable template block editor (FSE)
+
 ## 0.3.2 (2022-04-08)
 
 * Allow styles to be loaded conditionaly

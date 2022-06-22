@@ -69,6 +69,20 @@ class Theme implements SetupInterface {
     private $disable_editor_fullscreen_mode;
 
     /**
+     * Disable template editor
+     * @var bool
+     */
+    private $disable_template_editor;
+
+    /**
+     * Disable editor fullscreen mode
+     * @return void
+     */
+    public function disableTemplateEditor() {
+        $this->disable_template_editor = true;
+    }
+
+    /**
      * Disable editor fullscreen mode
      * @return void
      */
@@ -110,6 +124,7 @@ class Theme implements SetupInterface {
 
         $this->disableAutoUpdateEmails();
         $this->disableEditorFullscreenMode();
+        $this->disableTemplateEditor();
         $this->disableEmojis();
         $this->disableJqueryMigrate();
         $this->removeImageSize('1536x1536');
@@ -265,6 +280,11 @@ class Theme implements SetupInterface {
                     }
                     if (!defined('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS')) {
                         define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
+                    }
+
+                    if ($this->disable_template_editor){
+                        // https://gutenbergtimes.com/how-to-disable-theme-features-and-lock-block-templates-for-full-site-editing-in-wordpress/
+                        remove_theme_support( 'block-templates' );
                     }
 
                 }
