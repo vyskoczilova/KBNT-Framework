@@ -70,7 +70,7 @@ class Archive implements SetupInterface {
                 if (is_admin() || ! $query->is_main_query()) {
                     return;
                 }
-                if ($this->display_all && is_post_type_archive($this->display_all)) {
+                if ($this->display_all && (is_post_type_archive($this->display_all) || is_tax($this->display_all))) {
                     $query->set('posts_per_page', -1);
                 }
                 foreach ($this->order_by as $ab) {
@@ -171,15 +171,15 @@ class Archive implements SetupInterface {
     }
 
     /**
-     * Set archive show all CPTS
+     * Set archive show all CPTs or Taxonomy
      *
-     * @param  string  $cpt  Custom post type with archive only.
+     * @param  string  $cpt_or_tax  Custom post type with archive only.
      *
      * @return  self
      */
-    public function setDisplayAll(string $cpt)
+    public function setDisplayAll(string $cpt_or_tax)
     {
-        $this->display_all[] = $cpt;
+        $this->display_all[] = $cpt_or_tax;
 
         return $this;
     }
