@@ -74,7 +74,7 @@ class Archive implements SetupInterface {
                     $query->set('posts_per_page', -1);
                 }
                 foreach ($this->order_by as $ab) {
-                    if (is_post_type_archive($ab['post_type'])) {
+                    if (is_post_type_archive($ab['post_type']) || is_tax($ab['post_type'])) {
                         $query->set('orderby', [$ab['by'] => $ab['how']]);
                     }
                 }
@@ -186,15 +186,15 @@ class Archive implements SetupInterface {
 
     /**
      * Order archive by custom parameters
-     * @param mixed $cpt Post type slug.
+     * @param mixed $cpt_or_tax Post type or Taxonomy slug.
      * @param string $by By parameter.
      * @param string $how Select order of parameters.
      * @return void
      */
-    public function setOrderBy(string $cpt, string $by = 'title', string $how = 'ASC')
+    public function setOrderBy(string $cpt_or_tax, string $by = 'title', string $how = 'ASC')
     {
         $this->order_by[] = [
-            'post_type' => $cpt,
+            'post_type' => $cpt_or_tax,
             'by' => $by,
             'how' => $how
         ];

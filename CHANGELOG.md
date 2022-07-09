@@ -5,6 +5,7 @@
 * Styles & scripts enqueuing
 * Disable template block editor (FSE)
 * Show all - cpts or taxonomy (new)
+* Order by all - cpts or taxonomy (new)
 
 ## 0.3.2 (2022-04-08)
 
