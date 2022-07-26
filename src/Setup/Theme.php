@@ -5,7 +5,8 @@ namespace KBNT\Framework\Setup;
 use KBNT\Framework\Helpers\DisableEmojis;
 use KBNT\Framework\Interfaces\SetupInterface;
 
-class Theme implements SetupInterface {
+class Theme implements SetupInterface
+{
 
 
     /**
@@ -75,10 +76,17 @@ class Theme implements SetupInterface {
     private $disable_template_editor;
 
     /**
+     * Show thumnail in admin columns
+     * @var array
+     */
+    private $admin_show_thumbnail = [];
+
+    /**
      * Disable editor fullscreen mode
      * @return void
      */
-    public function disableTemplateEditor() {
+    public function disableTemplateEditor()
+    {
         $this->disable_template_editor = true;
     }
 
@@ -86,7 +94,8 @@ class Theme implements SetupInterface {
      * Disable editor fullscreen mode
      * @return void
      */
-    public function disableEditorFullscreenMode() {
+    public function disableEditorFullscreenMode()
+    {
         $this->disable_editor_fullscreen_mode = true;
     }
 
@@ -94,7 +103,8 @@ class Theme implements SetupInterface {
      * Disable auto update emails.
      * @return void
      */
-    public function disableAutoUpdateEmails() {
+    public function disableAutoUpdateEmails()
+    {
         $this->disable_auto_update_emails = true;
     }
 
@@ -109,18 +119,19 @@ class Theme implements SetupInterface {
         $this->menus[$slug] = \esc_html($name);
     }
 
-    public function allowSvg() {
+    public function allowSvg()
+    {
 
         $svg = new Svg();
         $svg->init();
-
     }
 
     /**
      * Set KBNT theme defaults
      * @return void
      */
-    public function setThemeDefaults() {
+    public function setThemeDefaults()
+    {
 
         $this->disableAutoUpdateEmails();
         $this->disableEditorFullscreenMode();
@@ -130,7 +141,6 @@ class Theme implements SetupInterface {
         $this->removeImageSize('1536x1536');
         $this->removeImageSize('2048x2048');
         $this->theme_defaults = true;
-
     }
 
     /**
@@ -187,16 +197,29 @@ class Theme implements SetupInterface {
      * Disable WP Emojis on frontend.
      * @return self
      */
-    public function disableEmojis() {
+    public function disableEmojis()
+    {
         $this->disable_emojis = true;
         return $this;
+    }
+
+    /**
+     * Show thumbnail in admin columns for selected post type
+     *
+     * @param string $post_type Post type.
+     * @return void
+     */
+    public function adminColumnsShowThumbnail(string $post_type)
+    {
+        $this->admin_show_thumbnail[] = $post_type;
     }
 
     /**
      * Initilize
      * @return void
      */
-    public function init() {
+    public function init()
+    {
 
         if ($this->disable_auto_update_emails) {
             add_filter('auto_plugin_update_send_email', '__return_false');
@@ -206,10 +229,9 @@ class Theme implements SetupInterface {
         if ($this->theme_defaults) {
 
             // Sanitize uploaded filenames.
-            add_action('sanitize_file_name', function($filename) {
+            add_action('sanitize_file_name', function ($filename) {
                 return preg_replace("/\s+/", "-", strtolower(remove_accents($filename)));
             });
-
         }
 
         if ($this->disable_emojis) {
@@ -227,29 +249,28 @@ class Theme implements SetupInterface {
 
         // Modify default sizes.
         if (!empty($this->image_sizes_modify)) {
-            add_action('after_switch_theme', function(){
+            add_action('after_switch_theme', function () {
 
-                foreach( $this->image_sizes_modify as $name => $args ) {
+                foreach ($this->image_sizes_modify as $name => $args) {
                     update_option($name . '_size_w', $args[0]);
                     update_option($name . '_size_h', $args[1]);
                     update_option($name . '_crop', $args[2]);
                 }
-
             });
         }
 
         // Disable jQuery migrate.
         if ($this->disable_jquery_migrate) {
             add_action('wp_default_scripts', function ($scripts) {
-                if (!empty($scripts->registered['jquery']) && ! is_admin()) {
+                if (!empty($scripts->registered['jquery']) && !is_admin()) {
                     $scripts->registered['jquery']->deps = array_diff($scripts->registered['jquery']->deps, ['jquery-migrate']);
                 }
             });
         }
 
         // Theme supports.
-        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove ) {
-            add_action('after_setup_theme', function() {
+        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove) {
+            add_action('after_setup_theme', function () {
 
                 if ($this->theme_defaults) {
 
@@ -282,11 +303,10 @@ class Theme implements SetupInterface {
                         define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
                     }
 
-                    if ($this->disable_template_editor){
+                    if ($this->disable_template_editor) {
                         // https://gutenbergtimes.com/how-to-disable-theme-features-and-lock-block-templates-for-full-site-editing-in-wordpress/
-                        remove_theme_support( 'block-templates' );
+                        remove_theme_support('block-templates');
                     }
-
                 }
 
                 // Load theme textdomain.
@@ -295,7 +315,7 @@ class Theme implements SetupInterface {
                 }
 
                 // Register menus.
-                if (!empty( $this->menus)) {
+                if (!empty($this->menus)) {
                     register_nav_menus(
                         $this->menus
                     );
@@ -316,26 +336,57 @@ class Theme implements SetupInterface {
                     }
                 }
 
+                // Show thumbnail admin column.
+                // Source: https://wpcustoms.net/snippets/show-post-thumbnails-in-your-admin-panel/
+                if (!empty($this->admin_show_thumbnail)) {
+                    foreach ($this->admin_show_thumbnail as $post_type) {
+                        add_filter('manage_' . $post_type . '_posts_columns', function ($columns) {
+                            $columns['thumbnail'] = __('Thumbnail');
+                            return $columns;
+                        });
+                        add_action('manage_' . $post_type . '_posts_custom_column', function ($column_name, $post_id) {
+
+                            $width = (int) 75;
+                            $height = (int) 75;
+
+                            if ('thumbnail' == $column_name) {
+                                // thumbnail of WP 2.9
+                                $thumbnail_id = get_post_meta($post_id, '_thumbnail_id', true);
+                                // image from gallery
+                                $attachments = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment', 'post_mime_type' => 'image'));
+                                if ($thumbnail_id)
+                                    $thumb = wp_get_attachment_image($thumbnail_id, array($width, $height), true);
+                                elseif ($attachments) {
+                                    foreach ($attachments as $attachment_id => $attachment) {
+                                        $thumb = wp_get_attachment_image($attachment_id, array($width, $height), true);
+                                    }
+                                }
+                                if (isset($thumb) && $thumb) {
+                                    echo $thumb;
+                                } else {
+                                    echo "-";
+                                }
+                            }
+                        }, 10, 2);
+                    }
+                }
             });
 
             if ($this->image_sizes_add) {
 
                 // Add Custom image sizes name to the admin dropdown.
-                add_filter('image_size_names_choose', function($sizes) {
+                add_filter('image_size_names_choose', function ($sizes) {
 
                     $additional_sizes = [];
-                    foreach($this->image_sizes_add as $name => $atts) {
+                    foreach ($this->image_sizes_add as $name => $atts) {
                         if (\is_string($name)) {
                             $additional_sizes[$atts[0]] = $name;
                         }
                     }
                     return array_merge($sizes, $additional_sizes);
-
                 });
-
             }
         }
-
     }
 
 
@@ -344,7 +395,7 @@ class Theme implements SetupInterface {
      *
      * @return  self
      */
-    public function disableJqueryMigrate( bool $disable = true)
+    public function disableJqueryMigrate(bool $disable = true)
     {
         $this->disable_jquery_migrate = $disable;
 

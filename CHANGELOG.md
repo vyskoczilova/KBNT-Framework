@@ -4,8 +4,9 @@
 
 * Styles & scripts enqueuing
 * Disable template block editor (FSE)
-* Show all - cpts or taxonomy (new)
-* Order by all - cpts or taxonomy (new)
+* Show all - cpts or taxonomy
+* Order by all - cpts or taxonomy
+* Show thumbnail in admin column
 
 ## 0.3.2 (2022-04-08)
 
