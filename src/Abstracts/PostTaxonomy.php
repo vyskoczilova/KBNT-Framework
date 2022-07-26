@@ -81,11 +81,11 @@ abstract class PostTaxonomy extends Data implements ArrayInterface {
 	/**
 	 * Public
 	 *
-	 * @param  mixed  $public  Whether a post type is intended for use publicly either via the admin interface or by front-end users.
+	 * @param  bool  $public  Whether a post type is intended for use publicly either via the admin interface or by front-end users.
 	 *
 	 * @return  self
 	 */
-	public function setPublic($public)
+	public function setPublic(bool $public)
 	{
 		$this->public = $public;
 
