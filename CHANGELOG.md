@@ -7,6 +7,7 @@
 * Show all - cpts or taxonomy
 * Order by all - cpts or taxonomy
 * Show thumbnail in admin column
+* Disable XMLRPC
 
 ## 0.3.2 (2022-04-08)
 

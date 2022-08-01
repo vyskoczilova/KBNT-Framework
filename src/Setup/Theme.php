@@ -82,6 +82,20 @@ class Theme implements SetupInterface
     private $admin_show_thumbnail = [];
 
     /**
+     * Disable XML-RPC
+     * @var bool
+     */
+    private $disable_xmlrpc;
+
+    /**
+     * Disable XML-RPC
+     */
+    public function disableXmlrpc()
+    {
+        $this->disable_xmlrpc = true;
+    }
+
+    /**
      * Disable editor fullscreen mode
      * @return void
      */
@@ -138,6 +152,7 @@ class Theme implements SetupInterface
         $this->disableTemplateEditor();
         $this->disableEmojis();
         $this->disableJqueryMigrate();
+        $this->disableXmlrpc();
         $this->removeImageSize('1536x1536');
         $this->removeImageSize('2048x2048');
         $this->theme_defaults = true;
@@ -224,6 +239,10 @@ class Theme implements SetupInterface
         if ($this->disable_auto_update_emails) {
             add_filter('auto_plugin_update_send_email', '__return_false');
             add_filter('auto_theme_update_send_email', '__return_false');
+        }
+
+        if ($this->disable_xmlrpc) {
+            add_filter('xmlrpc_enabled', '__return_false');
         }
 
         if ($this->theme_defaults) {
