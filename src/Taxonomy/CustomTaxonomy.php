@@ -308,7 +308,7 @@ class CustomTaxonomy extends PostTaxonomy {
 		$parameters = [];
 
 		foreach ($this as $key => $value) {
-			if ($value) {
+			if (isset($value)) {
 				if ($key === 'labels') {
 					$parameters[$key] = \wp_parse_args($value->getParameters(), $default['labels']);
 				} else {

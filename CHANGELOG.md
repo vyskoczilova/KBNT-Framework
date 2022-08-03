@@ -2,6 +2,7 @@
 
 ## 0.4.0 ()
 
+* Fix issue with `false` values in CustomTaxonomy class (esp. `public` parameter can be set to `false` etc.)
 * Styles & scripts enqueuing
 * Disable template block editor (FSE)
 * Show all - cpts or taxonomy
