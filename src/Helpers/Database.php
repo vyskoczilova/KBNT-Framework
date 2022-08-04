@@ -1,6 +1,6 @@
 <?php
 
-namespace Getmanta\Helpers;
+namespace KBNT\Framework\Helpers;
 
 class Database {
 	/**
