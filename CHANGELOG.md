@@ -9,6 +9,7 @@
 * Order by all - cpts or taxonomy
 * Show thumbnail in admin column
 * Disable XMLRPC
+* Database helper (create DB, get or download CSV from table)
 
 ## 0.3.2 (2022-04-08)
 
