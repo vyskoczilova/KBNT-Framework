@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 ()
+## 0.4.0 (2022-08-04)
 
 * Fix issue with `false` values in CustomTaxonomy class (esp. `public` parameter can be set to `false` etc.)
 * Styles & scripts enqueuing
