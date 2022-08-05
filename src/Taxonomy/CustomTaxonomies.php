@@ -18,6 +18,12 @@ class CustomTaxonomies implements SetupInterface {
 	 */
 	private $unregister_taxonomies_for_object_type = [];
 
+    /**
+     * Add taxonomy filter for admin
+     * @var array
+     */
+    private $add_filter_in_admin = [];
+
 	/**
 	 * Initialize.
 	 * @return bool
@@ -33,6 +39,8 @@ class CustomTaxonomies implements SetupInterface {
                 \unregister_taxonomy_for_object_type(...$ut);
             }
 		}, 10, 1);
+
+        $this->show_taxonomy_filter_in_admin();
 	}
 
 	/**
@@ -63,6 +71,39 @@ class CustomTaxonomies implements SetupInterface {
         $this->unregister_taxonomies_for_object_type[] = [$taxonomy, $post_type];
 
         return $this;
+    }
+
+    /**
+     * Add filter in admin for selected taxonomy
+     * @param mixed $taxonomy Taxonomy.
+     * @return void
+     */
+    public function addTaxonomyFilterInAdmin($taxonomy) {
+        $this->add_filter_in_admin[] = $taxonomy;
+    }
+
+    /**
+     * Show taxonomy filter in admin action
+     * @return void
+     */
+    private function show_taxonomy_filter_in_admin() {
+        foreach($this->add_filter_in_admin as $taxonomy) {
+            add_action('restrict_manage_posts', function() use ($taxonomy) {
+                $taxonomy_object = \get_taxonomy($taxonomy);
+                \wp_dropdown_categories([
+                    'show_option_all' => "— {$taxonomy_object->labels->name} —",
+                    'taxonomy' => $taxonomy,
+                    'name' => $taxonomy,
+                    'orderby' => 'name',
+                    'selected' => \get_query_var($taxonomy),
+                    'hierarchical' => true,
+                    'depth' => 3,
+                    'show_count' => false,
+                    'hide_if_empty' => false,
+                    'value_field' => 'slug',
+                ]);
+            });
+        }
     }
 
 }

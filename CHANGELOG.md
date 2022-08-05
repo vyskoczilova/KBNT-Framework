@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2 ()
+
+* Add taxonomy filter function in CustomTaxonomies
+
 ## 0.4.1 (2022-08-04)
 
 * Fix namespace.
