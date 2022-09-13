@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.2 ()
+## 0.4.2 (2022-09-13)
 
 * Add taxonomy filter function in CustomTaxonomies
 
