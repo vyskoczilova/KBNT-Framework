@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.3 ()
+
+* Set uncompressed image quality per theme default.
+
 ## 0.4.2 (2022-09-13)
 
 * Add taxonomy filter function in CustomTaxonomies

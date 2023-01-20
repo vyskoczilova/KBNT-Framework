@@ -88,6 +88,12 @@ class Theme implements SetupInterface
     private $disable_xmlrpc;
 
     /**
+     * Image quality
+     * @var int
+     */
+    private $image_quality;
+
+    /**
      * Disable XML-RPC
      */
     public function disableXmlrpc()
@@ -156,6 +162,17 @@ class Theme implements SetupInterface
         $this->removeImageSize('1536x1536');
         $this->removeImageSize('2048x2048');
         $this->theme_defaults = true;
+        $this->setImageQuality(100);
+    }
+
+    /**
+     * Set image quality
+     * 
+     * @param int $quality Image quality.
+     */
+    public function setImageQuality(int $quality)
+    {
+        $this->image_quality = $quality;
     }
 
     /**
@@ -405,6 +422,25 @@ class Theme implements SetupInterface
                     return array_merge($sizes, $additional_sizes);
                 });
             }
+        }
+
+        // Image quality
+        if ($this->image_quality) {
+            /**
+             * Set JPEG quality
+             * https://developer.wordpress.org/reference/hooks/jpeg_quality/
+             */
+            add_filter('jpeg_quality', function ($quality, $context) {
+                return $this->image_quality;
+            }, 10, 2);
+
+            /**
+             * Set Image  quality
+             * https://developer.wordpress.org/reference/hooks/wp_editor_set_quality/
+             */
+            add_filter('wp_editor_set_quality', function ($quality, $mime_type) {
+                return $this->image_quality;
+            }, 10, 2);
         }
     }
 
