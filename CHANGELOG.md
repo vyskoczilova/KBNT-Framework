@@ -3,6 +3,7 @@
 ## 0.4.3 ()
 
 * Set uncompressed image quality per theme default.
+* Archive updates on after_setup_theme hook.
 
 ## 0.4.2 (2022-09-13)
 
