@@ -130,7 +130,7 @@ class Archive implements SetupInterface
                     }, 1, 2);
                 }
 
-            }
+            });
 
         }
 
