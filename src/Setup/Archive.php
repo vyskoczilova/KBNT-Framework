@@ -45,7 +45,7 @@ class Archive implements SetupInterface
     public function init()
     {
 
-        if ($this->archive_only || $this->remove_archive_title || !empty($this->display_all) || !empty($this->order_by) || $this->is_home_load_more_posts !== null || $this->is_home_load_more_posts !== null)
+        if ($this->archive_only || $this->remove_archive_title || !empty($this->display_all) || !empty($this->order_by) || $this->is_home_load_more_posts !== null || $this->is_home_load_more_posts !== null) {
 
             add_action('after_setup_theme', function () {
 
@@ -129,12 +129,12 @@ class Archive implements SetupInterface
                         return $found_posts;
                     }, 1, 2);
                 }
-            }
 
             }
 
         }
 
+    }
 }
 
 
