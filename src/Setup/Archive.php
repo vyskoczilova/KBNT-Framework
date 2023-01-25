@@ -135,102 +135,101 @@ class Archive implements SetupInterface
         }
 
     }
-}
 
 
-/**
- * Set remove archive title
- *
- * @return  self
- */
-public
-function setRemoveArchiveTitle()
-{
-    $this->remove_archive_title = true;
+    /**
+     * Set remove archive title
+     *
+     * @return  self
+     */
+    public
+    function setRemoveArchiveTitle()
+    {
+        $this->remove_archive_title = true;
 
-    return $this;
-}
+        return $this;
+    }
 
-/**
- * Set archive only CPTS
- *
- * @param string $cpt Custom post type with archive only.
- *
- * @return  self
- */
-public
-function setArchiveOnly(string $cpt)
-{
-    $this->archive_only[] = $cpt;
+    /**
+     * Set archive only CPTS
+     *
+     * @param string $cpt Custom post type with archive only.
+     *
+     * @return  self
+     */
+    public
+    function setArchiveOnly(string $cpt)
+    {
+        $this->archive_only[] = $cpt;
 
-    return $this;
-}
+        return $this;
+    }
 
-/**
- * Redirect page to the archive CPT
- * @source https://themeitems.com/how-to-create-a-archive-only-custom-post-type-in-wordpress/
- * @return void
- */
-public
-function wp_archive_only()
-{
-    foreach ($this->archive_only as $cpt) {
-        global $post;
-        if (is_singular($cpt)) {
-            $redirect_link = get_post_type_archive_link($cpt) . "#" . sanitize_title($post->post_title);
-            wp_safe_redirect($redirect_link, 302);
-            exit;
+    /**
+     * Redirect page to the archive CPT
+     * @source https://themeitems.com/how-to-create-a-archive-only-custom-post-type-in-wordpress/
+     * @return void
+     */
+    public
+    function wp_archive_only()
+    {
+        foreach ($this->archive_only as $cpt) {
+            global $post;
+            if (is_singular($cpt)) {
+                $redirect_link = get_post_type_archive_link($cpt) . "#" . sanitize_title($post->post_title);
+                wp_safe_redirect($redirect_link, 302);
+                exit;
+            }
         }
     }
-}
 
-/**
- * Set archive show all CPTs or Taxonomy
- *
- * @param string $cpt_or_tax Custom post type with archive only.
- *
- * @return  self
- */
-public
-function setDisplayAll(string $cpt_or_tax)
-{
-    $this->display_all[] = $cpt_or_tax;
+    /**
+     * Set archive show all CPTs or Taxonomy
+     *
+     * @param string $cpt_or_tax Custom post type with archive only.
+     *
+     * @return  self
+     */
+    public
+    function setDisplayAll(string $cpt_or_tax)
+    {
+        $this->display_all[] = $cpt_or_tax;
 
-    return $this;
-}
+        return $this;
+    }
 
-/**
- * Order archive by custom parameters
- * @param mixed $cpt_or_tax Post type or Taxonomy slug.
- * @param string $by By parameter.
- * @param string $how Select order of parameters.
- * @return void
- */
-public
-function setOrderBy(string $cpt_or_tax, string $by = 'title', string $how = 'ASC')
-{
-    $this->order_by[] = [
-        'post_type' => $cpt_or_tax,
-        'by' => $by,
-        'how' => $how
-    ];
-}
+    /**
+     * Order archive by custom parameters
+     * @param mixed $cpt_or_tax Post type or Taxonomy slug.
+     * @param string $by By parameter.
+     * @param string $how Select order of parameters.
+     * @return void
+     */
+    public
+    function setOrderBy(string $cpt_or_tax, string $by = 'title', string $how = 'ASC')
+    {
+        $this->order_by[] = [
+            'post_type' => $cpt_or_tax,
+            'by' => $by,
+            'how' => $how
+        ];
+    }
 
-/**
- * Load one more post on first page of is_home()
- * @param bool $one_more_post Load one more post?
- * @return $this
- */
-/**
- * Load  more post on first page of is_home()
- * @param int $number_of_posts_to_add Number of posts to add
- * @return $this
- */
-public
-function loadMorePostOnIsHome(int $number_of_posts_to_add = 1)
-{
-    $this->is_home_load_more_posts = $number_of_posts_to_add;
-    return $this;
-}
+    /**
+     * Load one more post on first page of is_home()
+     * @param bool $one_more_post Load one more post?
+     * @return $this
+     */
+    /**
+     * Load  more post on first page of is_home()
+     * @param int $number_of_posts_to_add Number of posts to add
+     * @return $this
+     */
+    public
+    function loadMorePostOnIsHome(int $number_of_posts_to_add = 1)
+    {
+        $this->is_home_load_more_posts = $number_of_posts_to_add;
+        return $this;
+    }
 
 }
