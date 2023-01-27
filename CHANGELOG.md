@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.4.3 ()
+## 0.5.0 ()
 
 * Set uncompressed image quality per theme default.
 * Archive updates on after_setup_theme hook.
+* ⚠ Rename SaveTheHTML to ConstructBlock class and add core/paragraph (used in block patterns)
 
 ## 0.4.2 (2022-09-13)
 
