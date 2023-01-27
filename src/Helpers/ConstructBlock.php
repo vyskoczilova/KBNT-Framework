@@ -17,7 +17,7 @@ class ConstructBlock
 
         $prepared = self::prepare($align, [], $bgColor);
 
-        return '<!-- wp:group '. $prepared->params .' --><div class="'. $prepared->classes .'">' . $content . '</div><!-- /wp:group -->';
+        return '<!-- wp:group '. $prepared->params .' --><div'.$prepared->classes.'>' . $content . '</div><!-- /wp:group -->';
 
     }
 
@@ -39,7 +39,7 @@ class ConstructBlock
             $params['level'] = intval($level);
         }
 
-        return '<!-- wp:heading '. $prepared->params .' --><h'.$level.' class="'. $prepared->classes .'">' . $content . '</h' . $level . '><!-- /wp:heading -->';
+        return '<!-- wp:heading '. $prepared->params .' --><h'.$level.''.$prepared->classes.'>' . $content . '</h' . $level . '><!-- /wp:heading -->';
 
     }
 
@@ -55,7 +55,7 @@ class ConstructBlock
 
         $prepared = self::prepare($textAlign, $classNames);
 
-        return '<!-- wp:paragraph '. $prepared->params .' --><p class="'. $prepared->classes .'">' . $content . '</p><!-- /wp:paragraph -->';
+        return '<!-- wp:paragraph '. $prepared->params .' --><p'.$prepared->classes.'>' . $content . '</p><!-- /wp:paragraph -->';
 
     }
 
@@ -93,8 +93,16 @@ class ConstructBlock
         }
 
         $return = new \stdClass();
-        $return->params = \wp_json_encode($params);
-        $return->classes = \implode(' ', $classes);
+        $return->params = '';
+        $return->classes = '';
+
+        if ($params) {
+            $return->params = \wp_json_encode($params);
+        }
+
+        if ($classes) {
+            $return->classes = ' class="' . \implode(' ', $classes) . '"';
+        }
 
         return $return;
     }
