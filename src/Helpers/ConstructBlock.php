@@ -15,7 +15,7 @@ class ConstructBlock
     public static function coreGroup(string $content, string $align = null, string $bgColor = null): string
     {
 
-        $prepared = self::prepare($align, [], $bgColor);
+        $prepared = self::prepare($align, ['wp-block-group'], $bgColor);
 
         return '<!-- wp:group '. $prepared->params .' --><div'.$prepared->classes.'>' . $content . '</div><!-- /wp:group -->';
 
@@ -77,6 +77,7 @@ class ConstructBlock
         if ($textAlign) {
             $params['align'] = $textAlign;
             $classes[] = "has-text-align-$textAlign";
+            $classes[] = "align$textAlign";
         }
         if ($classNames) {
             $params['className'] = \implode(' ', $classNames);
