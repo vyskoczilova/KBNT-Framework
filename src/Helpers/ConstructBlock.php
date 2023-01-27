@@ -25,14 +25,15 @@ class ConstructBlock
      * Construct core/heading block
      * @param string $content Heading text.
      * @param int $level Heading level.
-     * @param string|null $textAlign Text align.
+     * @param string $textAlign Text align.
      * @param array $classNames Classes.
+     * @param string $color Color.
      * @return string
      */
-    public static function coreHeading(string $content = "", int $level = 2, string $textAlign = null, array $classNames = []): string
+    public static function coreHeading(string $content = "", int $level = 2, string $textAlign = '', array $classNames = [], string $color = ''): string
     {
 
-        $prepared = self::prepare($textAlign, $classNames);
+        $prepared = self::prepare($textAlign, $classNames, '', $color);
 
         if (intval($level) !== 2) {
             $params['level'] = intval($level);
@@ -49,7 +50,7 @@ class ConstructBlock
      * @param array $classNames Classes.
      * @return string
      */
-    public static function coreParagraph(string $content = "", string $textAlign = null, array $classNames = []): string
+    public static function coreParagraph(string $content = "", string $textAlign = '', array $classNames = []): string
     {
 
         $prepared = self::prepare($textAlign, $classNames);
@@ -64,10 +65,11 @@ class ConstructBlock
      *
      * @param string $textAlign Text align.
      * @param array $classNames Classes.
-     * @param string|null $bgColor Background color.
+     * @param string $bgColor Background color.
+     * @param string $color Color.
      * @return \stdClass
      */
-    private static function prepare(string $textAlign = '', array $classNames = [], string $bgColor = ""): \stdClass
+    private static function prepare(string $textAlign = '', array $classNames = [], string $bgColor = "", string $color = ""): \stdClass
     {
         $params = [];
         $classes = [];
@@ -84,6 +86,10 @@ class ConstructBlock
             $params['backgroundColor'] = $bgColor;
             $classes[] = "has-background";
             $classes[] = "has-$bgColor-background-color";
+        }
+        if ($color) {
+            $params['color'] = $color;
+            $classes[] = "has-$color-color";
         }
 
         $return = new \stdClass();
