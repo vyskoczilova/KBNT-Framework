@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 ()
+## 0.5.0 (2023-01-31)
 
 * Set uncompressed image quality per theme default.
 * Archive updates on after_setup_theme hook.
