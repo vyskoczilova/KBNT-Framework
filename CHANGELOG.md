@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.5.0 ()
+## 0.5.1 (2023-03-06)
+
+* Add disable password reset e-mails function.
+* Allow to call SanitizeFilenames function separately (instead of theme_default var)
+
+## 0.5.0 (2023-01-31)
 
 * Set uncompressed image quality per theme default.
 * Archive updates on after_setup_theme hook.

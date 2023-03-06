@@ -28,6 +28,18 @@ class Theme implements SetupInterface
     private $disable_auto_update_emails;
 
     /**
+     * Disable password change emails
+     * @var bool
+     */
+    private $disable_password_reset_emails;
+
+    /*
+    * Sanitize filenames
+    * @var bool
+    */
+    private $sanitize_file_names;
+
+    /**
      * Text domain
      * @var string
      */
@@ -121,11 +133,32 @@ class Theme implements SetupInterface
 
     /**
      * Disable auto update emails.
+     * @param bool $disable Disable auto update emails.
      * @return void
      */
-    public function disableAutoUpdateEmails()
+    public function disableAutoUpdateEmails($disable = true)
     {
-        $this->disable_auto_update_emails = true;
+        $this->disable_auto_update_emails = $disable;
+    }
+
+    /**
+     * Disable password reset emails.
+     * @param bool $disable Disable password reset emails.
+     * @return void
+     */
+    public function disablePasswordResetEmails($disable = true)
+    {
+        $this->disable_password_reset_emails = $disable;
+    }
+
+    /**
+     * Sanitize filenames
+     * @param bool $sanitize Sanitize filenames.
+     * @return void
+     */
+    public function sanitizeFileNames($sanitize = true)
+    {
+        $this->sanitize_file_names = $sanitize;
     }
 
     /**
@@ -154,6 +187,7 @@ class Theme implements SetupInterface
     {
 
         $this->disableAutoUpdateEmails();
+        $this->disablePasswordResetEmails();
         $this->disableEditorFullscreenMode();
         $this->disableTemplateEditor();
         $this->disableEmojis();
@@ -161,6 +195,7 @@ class Theme implements SetupInterface
         $this->disableXmlrpc();
         $this->removeImageSize('1536x1536');
         $this->removeImageSize('2048x2048');
+        $this->sanitizeFileNames();
         $this->theme_defaults = true;
         $this->setImageQuality(100);
     }
@@ -258,12 +293,15 @@ class Theme implements SetupInterface
             add_filter('auto_theme_update_send_email', '__return_false');
         }
 
+        if ($this->disable_password_reset_emails) {
+            add_filter( 'send_password_change_email', '__return_false' );
+        }
+
         if ($this->disable_xmlrpc) {
             add_filter('xmlrpc_enabled', '__return_false');
         }
 
-        if ($this->theme_defaults) {
-
+        if ($this->sanitize_file_names) {
             // Sanitize uploaded filenames.
             add_action('sanitize_file_name', function ($filename) {
                 return preg_replace("/\s+/", "-", strtolower(remove_accents($filename)));
