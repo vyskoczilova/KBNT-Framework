@@ -44,6 +44,7 @@ class Tracking implements SetupInterface
 	 */
 	public function setGtm(string $id)
 	{
+
 		$this->gtm = $id;
 
         return $this;

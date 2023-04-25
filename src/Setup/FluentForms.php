@@ -4,7 +4,8 @@ namespace KBNT\Framework\Setups;
 
 use KBNT\Framework\Interfaces\SetupInterface;
 
-class FluentForms implements SetupInterface {
+class FluentForms implements SetupInterface
+{
 
     /**
      * Do shortcode in Terms & Conditions
@@ -13,10 +14,17 @@ class FluentForms implements SetupInterface {
     private $do_shortcode_tnc;
 
     /**
+     * Keep one IP instead of multiple commaseparated IPs by default (needs to be revised in further Fluent Forms versions)
+     * @var bool
+     */
+    private $keep_one_ip_only;
+
+    /**
      * Initialize.
      * @return void
      */
-    function init() {
+    function init()
+    {
 
         if ($this->do_shortcode_tnc) {
             add_filter('fluentform_rendering_field_data_terms_and_condition', function ($data, $form) {
@@ -25,6 +33,14 @@ class FluentForms implements SetupInterface {
             }, 10, 3);
         }
 
+        if ($this->keep_one_ip_only) {
+            add_filter('fluentform_filter_insert_data', function ($response) {
+                if (isset($response['ip'])) {
+                    $response['ip'] = explode(',', $response['ip'])[0]; // Keep only first IP address (remove all others).
+                }
+                return $response;
+            }, 10, 1);
+        }
     }
 
 
@@ -35,9 +51,21 @@ class FluentForms implements SetupInterface {
      *
      * @return  self
      */
-    public function setDoShortcodeTnc(bool $do_shortcode_tnc = true )
+    public function setDoShortcodeTnc(bool $do_shortcode_tnc = true)
     {
         $this->do_shortcode_tnc = $do_shortcode_tnc;
+
+        return $this;
+    }
+
+    /**
+     * Set keep one IP instead of multiple commaseparated IPs by default (needs to be revised in further Fluent Forms versions)
+     * @param bool $keep_one_ip_only Enable/disable settings.
+     * @return self 
+     */
+    public function setKeepOneIpOnly(bool $keep_one_ip_only = true)
+    {
+        $this->keep_one_ip_only = $keep_one_ip_only;
 
         return $this;
     }

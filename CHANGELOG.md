@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2 (2023-04-25)
+
+* Fluent Forms - filter to keep only one IP address (hotfix FF bugu)
+
 ## 0.5.1 (2023-03-06)
 
 * Add disable password reset e-mails function.
