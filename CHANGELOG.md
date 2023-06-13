@@ -2,7 +2,8 @@
 
 ## 0.5.2 ()
 
-* Add core/butttons + core/button to construct
+* Add core/butttons + core/button to ConstructBlock
+* Refactor ConstructBlock class for better handling
 
 ## 0.5.2 (2023-04-25)
 
