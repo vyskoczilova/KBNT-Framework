@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2 ()
+
+* Add core/butttons + core/button to construct
+
 ## 0.5.2 (2023-04-25)
 
 * Fluent Forms - filter to keep only one IP address (hotfix FF bugu)

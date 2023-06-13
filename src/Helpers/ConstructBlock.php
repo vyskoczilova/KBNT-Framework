@@ -59,6 +59,24 @@ class ConstructBlock
 
     }
 
+    /* Construct core/buttons block */
+    public static function coreButtons($content = "", $layoutType = "flex", $justifyContent = "left", $classNames = []) {
+
+        $prepared = self::prepare("", $classNames, "", "", $layoutType, $justifyContent);
+
+        return '<!-- wp:buttons '. $prepared->params .' -->
+        <div class="wp-block-buttons'.$prepared->classes.'">' . $content . '</div><!-- /wp:buttons -->';
+    }
+
+    /* Construct core/button block */
+    public static function coreButton($link, $label, $style = "", $classNames = []) {
+        $prepared = self::prepare("", $classNames, "", "", "", "", "", $style);
+
+        return '<!-- wp:button ' . $prepared->params .' {"className":"is-style-primary"} -->
+        <div class="wp-block-button ' . $prepared->classes . '"><a class="wp-block-button__link wp-element-button" href="' . $link . '">' . $label . '</a></div>
+        <!-- /wp:button -->';
+    }
+
 
     /**
      * Prepare params and classes for block
@@ -69,8 +87,11 @@ class ConstructBlock
      * @param string $color Color.
      * @return \stdClass
      */
-    private static function prepare(string $textAlign = '', array $classNames = [], string $bgColor = "", string $color = ""): \stdClass
+    private static function prepare(string $textAlign = '', array $classNames = [], string $bgColor = "", string $color = "", $layoutType = "", $layoutJustifyContent = "", $style = ""): \stdClass
     {
+
+        // TODO napsat jako novou třídu a lepší getter / setter.
+
         $params = [];
         $classes = [];
 
@@ -91,6 +112,16 @@ class ConstructBlock
         if ($color) {
             $params['color'] = $color;
             $classes[] = "has-$color-color";
+        }
+        if ($layoutType) {
+            $params['layout']['type'] = $layoutType;
+        }
+        if ($layoutType) {
+            $params['layout']['justifyContent'] = $layoutJustifyContent;
+        }
+        if ($style) {
+            $params['className'] = "is-style-$style";
+            $classes[] = "is-style-$style";
         }
 
         $return = new \stdClass();
