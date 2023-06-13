@@ -75,8 +75,7 @@ class ConstructBlock
         $prepared->setLayoutType($layoutType);
         $prepared->setLayoutJustifyContent($justifyContent);
 
-        return '<!-- wp:buttons '. $prepared->getParams() .' -->
-        <div class="wp-block-buttons'.$prepared->getClasses().'">' . $content . '</div><!-- /wp:buttons -->';
+        return '<!-- wp:buttons '. $prepared->getParams() .' --><div class="wp-block-buttons'.$prepared->getClasses().'">' . $content . '</div><!-- /wp:buttons -->';
     }
 
     /* Construct core/button block */
@@ -86,8 +85,7 @@ class ConstructBlock
         $prepared->setClassNames($classNames);
         $prepared->setStyle($style);
 
-        return '<!-- wp:button ' . $prepared->getParams() .' -->
-        <div class="wp-block-button ' . $prepared->getClasses() . '"><a class="wp-block-button__link wp-element-button" href="' . $link . '">' . $label . '</a></div>
+        return '<!-- wp:button ' . $prepared->getParams() .' --><div class="wp-block-button ' . $prepared->getClasses() . '"><a class="wp-block-button__link wp-element-button" href="' . $link . '">' . $label . '</a></div>
         <!-- /wp:button -->';
     }
 
