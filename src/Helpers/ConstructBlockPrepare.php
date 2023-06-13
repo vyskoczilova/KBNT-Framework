@@ -212,6 +212,11 @@ class ConstructBlockPrepare
         if (!$this->blockParams) {
             $this->prepare();
         }
+
+        if (empty($this->blockParams)) {
+            return '';
+        }
+        
         return \wp_json_encode($this->blockParams);
     }
 
@@ -224,6 +229,11 @@ class ConstructBlockPrepare
         if (!$this->blockClasses) {
             $this->prepare();
         }
+
+        if (empty($this->blockClasses)) {
+            return '';
+        }
+
         return ' class="' . \implode(' ', $this->blockClasses) . '"';
     }
 
