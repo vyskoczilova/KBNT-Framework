@@ -161,7 +161,7 @@ abstract class StyleScript extends Files implements ArrayInterface {
      * @param bool $register_only Register instead of enqueue.
      * @return $this
      */
-    public function setRegisterOnly(bool $register_only)
+    public function setRegisterOnly(bool $register_only = true)
     {
         $this->register_only = $register_only;
 
