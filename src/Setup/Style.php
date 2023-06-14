@@ -41,13 +41,17 @@ class Style extends StyleScript {
     }
 
     /**
-     * Enqueue & localize
+     * Enqueue/register
      * @return void
      */
     public function enqueue()
     {
         if ($this->canLoad()) {
-            \wp_enqueue_style(...$this->getParameters());
+            if ($this->register_only) {
+                \wp_register_style(...$this->getParameters());
+            } else {
+                \wp_enqueue_style(...$this->getParameters());
+            }
         }
     }
 

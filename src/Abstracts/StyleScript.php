@@ -61,6 +61,12 @@ abstract class StyleScript extends Files implements ArrayInterface {
     protected $conditions;
 
     /**
+     * Register only
+     * @var bool
+     */
+    protected $register_only = false;
+
+    /**
      * Construct
      * @return void
      */
@@ -146,6 +152,18 @@ abstract class StyleScript extends Files implements ArrayInterface {
     public function setVersion($version)
     {
         $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Set register only
+     * @param bool $register_only Register instead of enqueue.
+     * @return $this
+     */
+    public function setRegisterOnly(bool $register_only)
+    {
+        $this->register_only = $register_only;
 
         return $this;
     }

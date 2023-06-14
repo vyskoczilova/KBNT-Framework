@@ -61,12 +61,16 @@ class Script extends StyleScript {
     }
 
     /**
-     * Enqueue & localize
+     * Enqueue/register & localize
      * @return void
      */
     public function enqueueScript() {
         if ($this->canLoad()) {
-            \wp_enqueue_script(...$this->getParameters());
+            if ($this->register_only) {
+                \wp_register_script(...$this->getParameters());
+            } else {
+                \wp_enqueue_script(...$this->getParameters());
+            }
             if ($this->localize) {
                 wp_localize_script($this->getHandle(), 'props', $this->localize);
             }
