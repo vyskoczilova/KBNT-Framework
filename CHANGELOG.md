@@ -6,6 +6,7 @@
 * Refactor ConstructBlock class for better handling
 * Add ConstructACfBlock helper
 * Add possibility to register only the selected script or style.
+* Recursive check for H1 in the contentn
 
 ## 0.5.2 (2023-04-25)
 

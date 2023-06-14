@@ -17,17 +17,18 @@ class Blocks {
      *
      * @param string $block
      */
-    public static function hasH1($post_content)
+    public static function hasH1($blocks)
     {
-        $blocks = \parse_blocks($post_content);
+        // Parse block if not parsed yet
+        if (!\is_array($blocks)) {
+            $blocks = \parse_blocks($blocks);
+        }
 
         if ($blocks) {
             foreach ($blocks as $block) {
-                if (isset($block['innerBlocks'])) {
-                    foreach ($block['innerBlocks'] as $innerBlock) {
-                        if (Block::hasHeadingLevel($innerBlock)) {
-                            return true;
-                        }
+                if (isset($block['innerBlocks']) && !empty($block['innerBlocks'])) {
+                    if (self::hasH1($block['innerBlocks'])) {
+                        return true;
                     }
                 } elseif (Block::hasHeadingLevel($block)) {
                     return true;
