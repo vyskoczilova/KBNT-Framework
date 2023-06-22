@@ -1,13 +1,13 @@
 # Changelog
 
-## 0.5.2 (2023-06-13)
+## 0.5.3 (2023-06-13)
 
 * Add core/butttons + core/button to ConstructBlock
 * Refactor ConstructBlock class for better handling
 * Add ConstructACfBlock helper
-* Recursive check for H1 in the contentn
-* Add possibility to register only the selected script or style but not enqueue
-* Allow negative condition to load script/style and make it available for dequeueing too.
+* Recursive check for H1 in the content
+* Add the possibility to register only the selected script or style but not enqueue
+* Allow negative conditions to load script/style and make it available for dequeuing.
 
 ## 0.5.2 (2023-04-25)
 
