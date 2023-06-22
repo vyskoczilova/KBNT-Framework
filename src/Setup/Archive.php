@@ -216,6 +216,15 @@ class Archive implements SetupInterface
     }
 
     /**
+     * Do not increase posts_per_page number because of sticky posts.
+     * @return void
+     */
+    public function setStickyPostsWithinPostsPerPageCount() {
+        $sticky_posts_count = get_option('sticky_posts') ? count(get_option('sticky_posts')) : 0;
+        $this->loadMorePostOnIsHome($sticky_posts_count);
+    }
+
+    /**
      * Load one more post on first page of is_home()
      * @param bool $one_more_post Load one more post?
      * @return $this

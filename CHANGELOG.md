@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4 ()
+
+* Extend Archive behavior and handle sticky posts within the standard loop posts_per_page if possible.
+
 ## 0.5.3 (2023-06-13)
 
 * Add core/butttons + core/button to ConstructBlock
