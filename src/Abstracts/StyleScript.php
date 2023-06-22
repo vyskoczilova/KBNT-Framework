@@ -61,6 +61,12 @@ abstract class StyleScript extends Files implements ArrayInterface {
     protected $conditions;
 
     /**
+     * Set conditions NOT
+     * @var array
+     */
+    protected $conditions_not;
+
+    /**
      * Register only
      * @var bool
      */
@@ -76,13 +82,24 @@ abstract class StyleScript extends Files implements ArrayInterface {
     }
 
     /**
-     * Set conditions to enqueue
+     * Set conditions to enqueue/dequeue
      * @param callable $conditions Array of callbacks
      * @return $this
      */
     public function setCondition($condition)
     {
         $this->conditions[] = is_string($condition) ? [$condition] : $condition;
+        return $this;
+    }
+
+    /**
+     * Set conditions NOT to enqueue/dequeue
+     * @param callable $conditions Array of callbacks
+     * @return $this
+     */
+    public function setConditionNot($condition)
+    {
+        $this->conditions_not[] = is_string($condition) ? [$condition] : $condition;
         return $this;
     }
 
@@ -212,11 +229,25 @@ abstract class StyleScript extends Files implements ArrayInterface {
      * Test conditions if can load.
      * @return bool
      */
-    protected function canLoad()
+    public function canExecute()
     {
-        if (empty($this->conditions)) {
+        if (empty($this->conditions) && empty($this->conditions_not)) {
             return true;
         }
+
+        if ($this->conditions_not !== null) {
+            foreach ($this->conditions_not as $c) {
+                if (\is_callable($c[0])) {
+                    if (call_user_func(...$c)) {
+                        return false;
+                    }
+                }
+            }
+            if (empty($this->conditions)) {
+                return true;
+            }
+        }
+
 
         foreach ($this->conditions as $c) {
             if (\is_callable($c[0])) {

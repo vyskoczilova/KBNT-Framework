@@ -65,7 +65,7 @@ class Script extends StyleScript {
      * @return void
      */
     public function enqueueScript() {
-        if ($this->canLoad()) {
+        if ($this->canExecute()) {
             if ($this->register_only) {
                 \wp_register_script(...$this->getParameters());
             } else {

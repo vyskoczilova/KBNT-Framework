@@ -46,7 +46,7 @@ class Style extends StyleScript {
      */
     public function enqueue()
     {
-        if ($this->canLoad()) {
+        if ($this->canExecute()) {
             if ($this->register_only) {
                 \wp_register_style(...$this->getParameters());
             } else {

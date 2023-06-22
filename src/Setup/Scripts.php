@@ -106,11 +106,12 @@ class Scripts implements SetupInterface {
     /**
      * Dequeue style
      * @param string $handle style handle.
-     * @return void
+     * @return Script
      */
     public function dequeueStyle(string $handle)
     {
-        $this->dequeue_styles[] = $handle;
+        $this->dequeue_styles[] = $this->helperPrepareScript($handle);
+        return end($this->dequeue_styles);
     }
 
     /**
@@ -141,32 +142,34 @@ class Scripts implements SetupInterface {
         return end($this->editor_scripts);
     }
 
-
     /**
      * Helper for script registration
      * @param string $handle Name of the script. Should be unique.
      * @param string $src Full URL of the script, or path of the script relative to the WordPress root directory. If source is set to false, script is an alias of other scripts it depends on.
      * @return Script
      */
-    private function helperPrepareScript(string $handle, string $src)
+    private function helperPrepareScript(string $handle, string $src = null)
     {
 
         // Setup required parameters.
         $script = new Script();
-        $script->setHandlePrefix($this->prefix);
         $script->setHandle($handle);
-        $script->setSrc($src);
+        if ($src !== null) {
+            $script->setHandlePrefix($this->prefix);
+            $script->setSrc($src);
+        }
         return $script;
     }
 
     /**
      * Dequeue script
      * @param string $handle script handle.
-     * @return void
+     * @return Script
      */
     public function dequeueScript(string $handle)
     {
-        $this->dequeue_scripts[] = $handle;
+        $this->dequeue_scripts[] = $this->helperPrepareScript($handle);
+        return end($this->dequeue_scripts);
     }
 
     /**
@@ -178,8 +181,10 @@ class Scripts implements SetupInterface {
         // Dequeue style.
         if (!empty($this->dequeue_styles)) {
             add_action('wp_print_styles', function() {
-                foreach ($this->dequeue_styles as $handle) {
-                    \wp_dequeue_style($handle);
+                foreach ($this->dequeue_styles as $style) {
+                    if ($style->canExecute()) {
+                        \wp_dequeue_style($style->getHandle());
+                    }
                 }
             }, 100);
         }
@@ -196,9 +201,11 @@ class Scripts implements SetupInterface {
 
             // Remove scripts
             if ($this->dequeue_scripts) {
-                foreach ($this->dequeue_scripts as $handle) {
-                    \wp_deregister_script($handle);
-                    \wp_dequeue_script($handle);
+                foreach ($this->dequeue_scripts as $script) {
+                    if ($script->canExecute()) {
+                        \wp_deregister_script($script->getHandle());
+                        \wp_dequeue_script($script->getHandle());
+                    }
                 }
             }
 
