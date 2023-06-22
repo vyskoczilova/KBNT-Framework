@@ -220,7 +220,7 @@ class Archive implements SetupInterface
      * @return void
      */
     public function setStickyPostsWithinPostsPerPageCount() {
-        $sticky_posts_count = get_option('sticky_posts') ? count(get_option('sticky_posts')) : 0;
+        $sticky_posts_count = get_option('sticky_posts') ? count(get_option('sticky_posts')) * -1 : 0;
         $this->loadMorePostOnIsHome($sticky_posts_count);
     }
 
