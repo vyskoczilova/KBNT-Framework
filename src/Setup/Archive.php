@@ -39,6 +39,12 @@ class Archive implements SetupInterface
     private $is_home_load_more_posts;
 
     /**
+     * Don't duplicate sticky posts
+     * @var bool
+     */
+    private $dont_duplicate_sticky_posts;
+
+    /**
      * Initialize
      * @return void
      */
@@ -103,6 +109,11 @@ class Archive implements SetupInterface
 
                                 // Apply adjust page offset
                                 $query->set('offset', $page_offset);
+
+                                // Don't duplicate sticky posts
+                                if ($this->dont_duplicate_sticky_posts) {
+                                    $query->set('post__not_in', get_option('sticky_posts'));
+                                }
 
 
                             } else {
@@ -217,11 +228,13 @@ class Archive implements SetupInterface
 
     /**
      * Do not increase posts_per_page number because of sticky posts.
+     * @param bool $dont_duplicate_sticky_posts Do not duplicate sticky posts (default WP behavior is to duplicate sticky posts)
      * @return void
      */
-    public function setStickyPostsWithinPostsPerPageCount() {
+    public function setStickyPostsWithinPostsPerPageCount($dont_duplicate_sticky_posts = false) {
         $sticky_posts_count = get_option('sticky_posts') ? count(get_option('sticky_posts')) * -1 : 0;
         $this->loadMorePostOnIsHome($sticky_posts_count);
+        $this->dont_duplicate_sticky_posts = $dont_duplicate_sticky_posts;
     }
 
     /**
