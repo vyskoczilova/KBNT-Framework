@@ -106,6 +106,20 @@ class Theme implements SetupInterface
     private $image_quality;
 
     /**
+     * Bug fix decoding=async
+     * @var bool
+     */
+    private $bug_fix_decoding_async = true;
+
+    /**
+     * Disable Bug fix decoding=async
+     */
+    public function disableBugFixDecodingAsync()
+    {
+        $this->bug_fix_decoding_async = false;
+    }
+
+    /**
      * Disable XML-RPC
      */
     public function disableXmlrpc()
@@ -479,6 +493,16 @@ class Theme implements SetupInterface
             add_filter('wp_editor_set_quality', function ($quality, $mime_type) {
                 return $this->image_quality;
             }, 10, 2);
+        }
+
+        // Bug fix for 6.1+ decoding=async
+        if ($this->bug_fix_decoding_async) {
+            add_filter( 'wp_content_img_tag', function( $filtered_image, $context, $attachment_id ) {
+                if ( false !== strpos( $filtered_image, 'loading="eager"' ) || false !== stripos( $filtered_image, 'fetchpriority="high"' ) ) {
+                    $filtered_image = str_replace( ' decoding="async"', '', $filtered_image );
+                }
+                return $filtered_image;
+            }, 10, 3 );
         }
     }
 

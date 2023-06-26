@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.5.4 ()
+## 0.5.4 (2023-06-26)
 
 * Extend Archive behavior and handle sticky posts within the standard loop posts_per_page if possible.
+* Fix decoding=async issue.
 
 ## 0.5.3 (2023-06-13)
 
