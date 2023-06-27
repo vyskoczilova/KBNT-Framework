@@ -112,6 +112,12 @@ class Theme implements SetupInterface
     private $bug_fix_decoding_async = true;
 
     /**
+     * Default image size
+     * @var string
+     */
+    private $default_image_size;
+
+    /**
      * Disable Bug fix decoding=async
      */
     public function disableBugFixDecodingAsync()
@@ -275,6 +281,16 @@ class Theme implements SetupInterface
     }
 
     /**
+     * Set default image size
+     * @param string $name Size name/slug.
+     * @return void
+     */
+    public function setDefaultImageSize(string $name)
+    {
+        $this->default_image_size = $name;
+    }
+
+    /**
      * Disable WP Emojis on frontend.
      * @return self
      */
@@ -335,15 +351,21 @@ class Theme implements SetupInterface
             });
         }
 
-        // Modify default sizes.
-        if (!empty($this->image_sizes_modify)) {
+        if (!empty($this->image_sizes_modify) || $this->default_image_size) {
             add_action('after_switch_theme', function () {
+                
+                // Set default image size.
+                if ($this->default_image_size) {
+                    update_option('image_default_size', $this->default_image_size);
+                }
 
+                // Default sizes.
                 foreach ($this->image_sizes_modify as $name => $args) {
                     update_option($name . '_size_w', $args[0]);
                     update_option($name . '_size_h', $args[1]);
                     update_option($name . '_crop', $args[2]);
                 }
+
             });
         }
 
@@ -465,7 +487,10 @@ class Theme implements SetupInterface
                 // Add Custom image sizes name to the admin dropdown.
                 add_filter('image_size_names_choose', function ($sizes) {
 
-                    $additional_sizes = [];
+                    $additional_sizes = [
+                        'medium_large' => __( 'Medium Large' ),
+                    ];
+
                     foreach ($this->image_sizes_add as $name => $atts) {
                         if (\is_string($name)) {
                             $additional_sizes[$atts[0]] = $name;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.5 ()
+
+* Set default image size.
+
 ## 0.5.4 (2023-06-26)
 
 * Extend Archive behavior and handle sticky posts within the standard loop posts_per_page if possible.
