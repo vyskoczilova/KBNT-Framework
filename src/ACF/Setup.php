@@ -40,8 +40,16 @@ class Setup
      * @return void
      */
     public function supportReusableBlocksPostType() {
-        add_filter('acf/get_post_types', function($post_types) {
-            $post_types[] = 'wp_block';
+        $this->supportCustomPostType('wp_block');
+    }
+
+    /**
+     * Add custom post type to the dropdown Post type
+     * @param string $custom_post_type Custom post type.
+     */
+    public function supportCustomPostType( $custom_post_type ) {
+        add_filter('acf/get_post_types', function($post_types) use ($custom_post_type) {
+            $post_types[] = $custom_post_type;
             return $post_types;
         }, 10, 1);
     }
