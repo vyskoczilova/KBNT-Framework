@@ -4,7 +4,8 @@
 
 * Set default image size.
 * Add custom post type to ACF post type select.
-* Add custom login Image
+* Add custom login Image.
+* Cleanup dashboard.
 
 ## 0.5.4 (2023-06-26)
 
