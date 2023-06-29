@@ -112,6 +112,12 @@ class Theme implements SetupInterface
     private $bug_fix_decoding_async = true;
 
     /**
+     * Login logo
+     * @var array
+     */
+    private $login_logo;
+
+    /**
      * Default image size
      * @var string
      */
@@ -309,6 +315,18 @@ class Theme implements SetupInterface
     public function adminColumnsShowThumbnail(string $post_type)
     {
         $this->admin_show_thumbnail[] = $post_type;
+    }
+
+    /**
+     * Set login logo
+     * @param string $url URL to logo.
+     * @param int $width Width in px.
+     * @param int $height Height in px.
+     * @return void 
+     */
+    public function setLoginLogo(string $url, int $width, int $height)
+    {
+        $this->login_logo = ["url" => $url, "width" => $width . "px", "height" => $height . "px"];
     }
 
     /**
@@ -528,6 +546,29 @@ class Theme implements SetupInterface
                 }
                 return $filtered_image;
             }, 10, 3 );
+        }
+
+        // Load custom logo at login screen.
+        if ($this->login_logo) {
+
+            // Change URL to homepage.
+    		add_filter( 'login_headerurl', function () {
+                return home_url(); 
+            });
+
+            add_action('login_enqueue_scripts', function () {
+                echo '<style type="text/css">
+                #login h1 a, .login h1 a {
+                    background-image: url(' . $this->login_logo['url'] .');
+                    width: ' . $this->login_logo['width'] .';
+                    height: ' . $this->login_logo['height'] .';
+                    background-size: ' . $this->login_logo['width'] .' ' . $this->login_logo['height'] .';
+                    background-repeat: no-repeat;
+                    padding-bottom: 10px;
+                    outline: 0!important;
+			    }
+                </style>';
+            });
         }
     }
 
