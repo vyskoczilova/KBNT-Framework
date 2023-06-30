@@ -6,6 +6,7 @@
 * Add custom post type to ACF post type select.
 * Add custom login Image.
 * Cleanup dashboard.
+* Add inline script.
 
 ## 0.5.4 (2023-06-26)
 

@@ -37,6 +37,12 @@ class Scripts implements SetupInterface {
     private $scripts = [];
 
     /**
+     * Inline scripts to register
+     * @var array
+     */
+    private $scripts_inline = [];
+
+    /**
      * Scripts for Block editor to register
      * @var array
      */
@@ -129,6 +135,21 @@ class Scripts implements SetupInterface {
     }
 
     /**
+     * Register Inline Script
+     * @param string $handle Name of the script after which it should be appended.
+     * @param string $script Script content.
+     * @param string $position Position of the script. Default 'after'.
+     * @return Script
+     */
+    public function registerInlineScript(string $handle, string $data, $position = 'after')
+    {
+
+        $this->scripts_inline[] = [$handle, $data, $position];
+
+        return $this;
+    }
+
+    /**
      * Register Block editor Script
      * @param string $handle Name of the script. Should be unique.
      * @param string $src Full URL of the script, or path of the script relative to the WordPress root directory. If source is set to false, script is an alias of other scripts it depends on.
@@ -210,6 +231,13 @@ class Scripts implements SetupInterface {
             }
 
             $this->helperRegisterStylesScripts($this->styles, $this->scripts);
+
+            // Inline scripts.
+            if (!empty($this->scripts_inline)) {
+                foreach ($this->scripts_inline as $script) {
+                    \wp_add_inline_script($script[0], $script[1], $script[2]);
+                }
+            }
 
         }, 100);
 
