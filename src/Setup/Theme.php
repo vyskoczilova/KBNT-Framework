@@ -82,12 +82,6 @@ class Theme implements SetupInterface
     private $disable_editor_fullscreen_mode;
 
     /**
-     * Disable template editor
-     * @var bool
-     */
-    private $disable_template_editor;
-
-    /**
      * Show thumnail in admin columns
      * @var array
      */
@@ -124,6 +118,12 @@ class Theme implements SetupInterface
     private $default_image_size;
 
     /**
+     * Remove theme support
+     * @var array
+     */
+    private $remove_theme_support = [];
+
+    /**
      * Disable Bug fix decoding=async
      */
     public function disableBugFixDecodingAsync()
@@ -145,7 +145,9 @@ class Theme implements SetupInterface
      */
     public function disableTemplateEditor()
     {
-        $this->disable_template_editor = true;
+        _doing_it_wrong('disableTemplateEditor', 'Call removeThemeSupport("block-templates") directly.', '0.5.5');
+        // https://gutenbergtimes.com/how-to-disable-theme-features-and-lock-block-templates-for-full-site-editing-in-wordpress/
+        $this->removeThemeSupport('block-templates');
     }
 
     /**
@@ -215,7 +217,6 @@ class Theme implements SetupInterface
         $this->disableAutoUpdateEmails();
         $this->disablePasswordResetEmails();
         $this->disableEditorFullscreenMode();
-        $this->disableTemplateEditor();
         $this->disableEmojis();
         $this->disableJqueryMigrate();
         $this->disableXmlrpc();
@@ -224,6 +225,8 @@ class Theme implements SetupInterface
         $this->sanitizeFileNames();
         $this->theme_defaults = true;
         $this->setImageQuality(100);
+        $this->removeThemeSupport('core-block-patterns');
+        $this->removeThemeSupport('block-templates');
     }
 
     /**
@@ -330,6 +333,19 @@ class Theme implements SetupInterface
     }
 
     /**
+     * Remove theme support
+     * @param string $feature Feature name.
+     * @return self
+     */
+    public function removeThemeSupport(string $feature)
+    {
+        if (!in_array($feature, $this->remove_theme_support)) {
+            $this->remove_theme_support[] = $feature;
+        }
+        return $this;
+    }
+
+    /**
      * Initilize
      * @return void
      */
@@ -397,7 +413,7 @@ class Theme implements SetupInterface
         }
 
         // Theme supports.
-        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove) {
+        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove || !empty($this->remove_theme_support)) {
             add_action('after_setup_theme', function () {
 
                 if ($this->theme_defaults) {
@@ -420,9 +436,6 @@ class Theme implements SetupInterface
                         ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script']
                     );
 
-                    // Remove core block patterns.
-                    \remove_theme_support('core-block-patterns');
-
                     // Don't load unnecessary CSS for WPML.
                     if (!defined('ICL_DONT_LOAD_NAVIGATION_CSS')) {
                         define('ICL_DONT_LOAD_NAVIGATION_CSS', true);
@@ -431,9 +444,12 @@ class Theme implements SetupInterface
                         define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
                     }
 
-                    if ($this->disable_template_editor) {
-                        // https://gutenbergtimes.com/how-to-disable-theme-features-and-lock-block-templates-for-full-site-editing-in-wordpress/
-                        remove_theme_support('block-templates');
+                }
+
+                // Remove theme support.
+                if (!empty($this->remove_theme_support)) {
+                    foreach ($this->remove_theme_support as $feature) {
+                        remove_theme_support($feature);
                     }
                 }
 
