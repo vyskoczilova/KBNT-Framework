@@ -7,6 +7,7 @@
 * Add custom login Image.
 * Cleanup dashboard.
 * Add inline script.
+* Remove theme support.
 
 ## 0.5.4 (2023-06-26)
 
