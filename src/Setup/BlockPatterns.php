@@ -27,6 +27,12 @@ class BlockPatterns implements SetupInterface
     private $patterns = [];
 
     /**
+     * Remove patterns
+     * @var array
+     */
+    private $remove_patterns = [];
+
+    /**
      * Categories
      * @var array
      */
@@ -65,6 +71,15 @@ class BlockPatterns implements SetupInterface
         return end($this->patterns);
     }
 
+    /**
+     * Remove pattern
+     * @param string $name Pattern name.
+     * @return void
+     */
+    public function removePattern(string $name)
+    {
+        $this->remove_patterns[] = $name;
+    }
 
     /**
      * Initialize.
@@ -72,7 +87,7 @@ class BlockPatterns implements SetupInterface
      */
     public function init()
     {
-        if (!empty($this->patterns) || !empty($this->categories)) {
+        if (!empty($this->patterns) || !empty($this->categories) || !empty($this->remove_patterns)) {
             add_action('init', function () {
 
                 if (function_exists('register_block_pattern_category')) {
@@ -81,6 +96,17 @@ class BlockPatterns implements SetupInterface
                             \sanitize_title($category),
                             array('label' => $category)
                         );
+                    }
+                    if (!empty($this->remove_patterns)) {
+
+                        $registered_patterns = \WP_Block_Patterns_Registry::get_instance()->get_all_registered();
+                        if ( $registered_patterns ) {
+                            foreach ( $registered_patterns as $pattern_properties ) {
+                                if ( in_array( $pattern_properties['name'], $this->remove_patterns )) {
+                                    unregister_block_pattern( $pattern_properties['name'] );
+                                }
+                            }                   
+                        }                  
                     }
                 }
 
