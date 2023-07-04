@@ -8,7 +8,7 @@
 * Cleanup dashboard.
 * Add inline script.
 * Remove theme support.
-* Allow to undergister patterns.
+* Allow to undergister patterns and categories.
 
 ## 0.5.4 (2023-06-26)
 
