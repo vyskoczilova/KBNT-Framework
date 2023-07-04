@@ -654,4 +654,90 @@ class FontAwesomeIcons {
         }
     }
 
+    /*
+    * Heartbeat
+    * @see https://fontawesome.com/v5/icons/heartbeat?f=classic&s=regular
+    * @param string $style Style of icon (regular|solid|light|duotone).
+    * @return string
+    */
+    public function getHeartbeat($style = null) {
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="' . $this->color . '" d="M266.4 427.7c-5.8 5.7-15.1 5.7-20.9 0L136.7 320H68.5l143.3 141.8c24.5 24.2 63.9 24.3 88.4 0L443.5 320h-68.2L266.4 427.7zM354.7 32c-36.5 0-71 12.3-98.7 34.9C228.3 44.3 193.8 32 157.3 32 86.2 32 0 88.9 0 188c0 37.3 13.7 72.1 37.8 100h116.8l29.9-71.7 56.9 126.3c5.5 12.3 22.9 12.7 28.9.6l49.7-99.4 22.1 44.2h132c24.1-27.9 37.8-62.7 37.8-100 .1-99.1-86.1-156-157.2-156zm83.9 224h-76.7l-27.6-55.2c-5.9-11.8-22.7-11.8-28.6 0l-48.9 97.9-58.2-129.3c-5.7-12.8-24-12.5-29.4.4L133.3 256H73.4c-58.8-69.5-7-176 83.9-176 31 0 51 6.2 98.7 53.4C307.1 82.9 325.1 80 354.7 80c91.2 0 142.7 106.5 83.9 176z"/></svg>';
+        }
+    }
+
+    /**
+     * Heading
+     * @see https://fontawesome.com/v5/icons/heading?f=classic&s=solid
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string 
+     */
+    public function getHeading($style = null) {
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            case 'solid':
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="' . $this->color . '" d="M448 96v320h32a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16H320a16 16 0 0 1-16-16v-32a16 16 0 0 1 16-16h32V288H160v128h32a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-32a16 16 0 0 1 16-16h32V96H32a16 16 0 0 1-16-16V48a16 16 0 0 1 16-16h160a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16h-32v128h192V96h-32a16 16 0 0 1-16-16V48a16 16 0 0 1 16-16h160a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16z"/></svg>';
+        }
+    }
+
+    /**
+     * Sign
+     * @see https://fontawesome.com/v5/icons/sign?f=classic&s=regular
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string 
+     */
+    public function getSign($style = null) {
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="' . $this->color . '" d="M496 64H112V16c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16v48H16C7.2 64 0 71.2 0 80v16c0 8.8 7.2 16 16 16h48v384c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16V112h80v48c-17.7 0-32 14.3-32 32v160c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32v-48h48c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16zm-64 272H208V208h224v128zm-16-176H224v-48h192v48z"/></svg>';
+        }
+    }
+
+    /**
+     * GraduationCap
+     * @see https://fontawesome.com/v5/icons/graduation-cap?f=classic&s=regular
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string 
+     */
+    public function getGraduationCap($style = null) {
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path fill="' . $this->color . '" d="M606.72 147.91l-258-79.57c-18.81-5.78-38.62-5.78-57.44 0l-258 79.57C13.38 154.05 0 171.77 0 192.02s13.38 37.97 33.28 44.11l22.64 6.98c-2.46 5.19-4.4 10.62-5.7 16.31C39.53 264.6 32 275.33 32 288.01c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.95 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.66c8.17-5.8 13.86-14.87 13.86-25.65 0-10.6-5.49-19.54-13.43-25.36 1.13-3.55 2.96-6.67 4.85-9.83l54.87 16.92L128 384c0 35.34 85.96 64 192 64s192-28.65 192-64l-14.28-114.26 109-33.62c19.91-6.14 33.28-23.86 33.28-44.11s-13.38-37.96-33.28-44.1zM462.44 374.47c-59.7 34.2-225.9 33.78-284.87 0l11.3-90.36 102.42 31.59c11.15 3.43 32.24 7.77 57.44 0l102.42-31.59 11.29 90.36zM334.59 269.82c-9.44 2.91-19.75 2.91-29.19 0L154.62 223.3l168.31-31.56c8.69-1.62 14.41-9.98 12.78-18.67-1.62-8.72-10.09-14.36-18.66-12.76l-203.78 38.2c-6.64 1.24-12.8 3.54-18.71 6.27L53.19 192l252.22-77.79c9.44-2.91 19.75-2.91 29.19 0l252.22 77.82-252.23 77.79z"/></svg>';
+        }
+    }
+
+    /**
+     * UsersCrown
+     * @see https://fontawesome.com/v5/icons/users-crown?f=classic&s=regular
+     * @param string $style Style of icon (regulat|solid|light|duotone).
+     * @return string 
+     */
+    public function getUsersCrown($style = null) {
+        if (! $style ) {
+            $style = $this->style;
+        }
+
+        switch ($style) {
+            default:
+                return '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path fill="' . $this->color . '" d="M556 256h-24c-17.3 0-33.39 5.27-46.77 14.28 13.37 10.14 25.18 22.18 34.43 36.22 3.88-1.44 7.96-2.5 12.34-2.5h24c19.84 0 36 16.16 36 36 0 13.25 10.75 24 24 24s24-10.75 24-24c0-46.31-37.69-84-84-84zm-12-32c44.18 0 80-35.82 80-80s-35.82-80-80-80-80 35.82-80 80 35.82 80 80 80zm0-112c17.64 0 32 14.36 32 32s-14.36 32-32 32-32-14.36-32-32 14.36-32 32-32zM154.77 270.28C141.39 261.27 125.3 256 108 256H84c-46.31 0-84 37.69-84 84 0 13.25 10.75 24 24 24s24-10.75 24-24c0-19.84 16.16-36 36-36h24c4.37 0 8.46 1.06 12.34 2.5 9.25-14.04 21.06-26.08 34.43-36.22zM96 224c44.18 0 80-35.82 80-80s-35.82-80-80-80-80 35.82-80 80 35.82 80 80 80zm0-112c17.64 0 32 14.36 32 32s-14.36 32-32 32-32-14.36-32-32 14.36-32 32-32zm268.66 169.28c-14.16 4.3-29.1 6.72-44.66 6.72s-30.5-2.42-44.66-6.72c-47.08-14.3-100.29.84-127.77 41.66C135.21 341.3 128 363.41 128 387.2V432c0 26.51 21.49 48 48 48h288c26.51 0 48-21.49 48-48v-44.8c0-23.79-7.21-45.9-19.57-64.25-27.48-40.82-80.69-55.97-127.77-41.67zM464 432H176v-44.8c0-36.44 29.16-66.2 65.38-67.18C266.88 330.63 293.32 336 320 336c26.67 0 53.11-5.37 78.62-15.98C434.84 321 464 350.76 464 387.2V432zM320 256c61.86 0 112-50.14 112-112V32l-56 28-56-28-56 28-56-28v112c0 61.86 50.14 112 112 112zm-64-128h128v16c0 35.29-28.71 64-64 64s-64-28.71-64-64v-16z"/></svg>';
+        }
+    }
+
 }

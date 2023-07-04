@@ -9,6 +9,7 @@
 * Add inline script.
 * Remove theme support.
 * Allow to undergister patterns and categories.
+* New FA icons
 
 ## 0.5.4 (2023-06-26)
 
