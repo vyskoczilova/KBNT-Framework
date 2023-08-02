@@ -2,6 +2,7 @@
 
 namespace KBNT\Framework\Setup;
 
+use KBNT\Framework\Helpers\WordPress;
 use KBNT\Framework\Interfaces\SetupInterface;
 
 class Scripts implements SetupInterface {
@@ -212,8 +213,10 @@ class Scripts implements SetupInterface {
 
         // Register Block editor styles.
         if (!empty($this->editor_styles) || !empty($this->editor_scripts)) {
-            add_action('enqueue_block_editor_assets', function(){
-                $this->helperRegisterStylesScripts($this->editor_styles, $this->editor_scripts);
+            add_action('enqueue_block_assets', function(){
+                if ( \is_admin()) {
+                    $this->helperRegisterStylesScripts($this->editor_styles, $this->editor_scripts);
+                }
             });
         }
 
