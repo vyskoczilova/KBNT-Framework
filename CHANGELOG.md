@@ -11,6 +11,7 @@
 * Allow to undergister patterns and categories.
 * New FA icons
 * Fix loading editor styles in Gutenberg iframe in 6.3 and newer
+* Fix no block defaults
 
 ## 0.5.4 (2023-06-26)
 

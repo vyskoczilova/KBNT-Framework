@@ -60,7 +60,7 @@ class Blocks implements SetupInterface{
     public function wpRegisterBlocks() {
 
         // Prepare defaults.
-        $defaults = $this->blocksDefaults->getParameters();
+        $defaults = $this->blocksDefaults ? $this->blocksDefaults->getParameters() : [];
         $defaults_supports = isset($defaults['supports']) ? $defaults['supports'] : [];
 
         // Order block by title.
