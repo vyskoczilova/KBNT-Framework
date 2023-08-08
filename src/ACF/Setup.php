@@ -24,14 +24,24 @@ class Setup
      * @param string $path Relative theme path where to store the JSON.
      * @return void
      */
-    public function useJson($path) {
-        $path = \get_stylesheet_directory() . (! Strings::startsWith($path, '/') ? '/' : '') . $path;
+    public function useJson($relative_path) {
+        $path = \get_stylesheet_directory() . (! Strings::startsWith($relative_path, '/') ? '/' : '') . $relative_path;
 
         add_filter('acf/settings/save_json',function() use ($path) {
             return $path;
         });
-        add_filter('acf/settings/load_json',function() use ($path) {
-            return [$path];
+
+        $this->loadJson($path);
+    }
+
+    /**
+     * Load data from JSON complete path.
+     * @param string $path
+     * @return void
+     */
+    public function loadJson($path) {
+        add_filter('acf/settings/load_json',function($paths) use ($path) {
+            return array_merge($paths,[$path]);
         });
     }
 
