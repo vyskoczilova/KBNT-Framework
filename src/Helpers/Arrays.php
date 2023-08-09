@@ -43,4 +43,23 @@ class Arrays {
         return $array;
     }
 
+    /**
+     * Append value after key
+     * @param array $array Array.
+     * @param mixed $key Key after which append.
+     * @param mixed $additional_key Key to append.
+     * @param mixed $additional_value Value to append.
+     * @return array
+     */
+    public static function appendValueAfterKey($array, $key, $additional_key, $additional_value) {
+        $new_array = [];
+        foreach ($array as $k => $v) {
+            $new_array[$k] = $v;
+            if ($k === $key) {
+                $new_array[$additional_key] = $additional_value;
+            }
+        }
+        return $new_array;
+    }
+
 }

@@ -13,6 +13,7 @@
 * Fix loading editor styles in Gutenberg iframe in 6.3 and newer
 * Fix no block defaults
 * ACF add loadJson function (load from parent instead of child etc.)
+* Array fce append after
 
 ## 0.5.4 (2023-06-26)
 
