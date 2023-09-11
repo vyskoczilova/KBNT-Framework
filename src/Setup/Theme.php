@@ -231,7 +231,7 @@ class Theme implements SetupInterface
 
     /**
      * Set image quality
-     * 
+     *
      * @param int $quality Image quality.
      */
     public function setImageQuality(int $quality)
@@ -325,7 +325,7 @@ class Theme implements SetupInterface
      * @param string $url URL to logo.
      * @param int $width Width in px.
      * @param int $height Height in px.
-     * @return void 
+     * @return void
      */
     public function setLoginLogo(string $url, int $width, int $height)
     {
@@ -358,7 +358,7 @@ class Theme implements SetupInterface
         }
 
         if ($this->disable_password_reset_emails) {
-            add_filter( 'send_password_change_email', '__return_false' );
+            remove_action( 'after_password_reset', 'wp_password_change_notification' );
         }
 
         if ($this->disable_xmlrpc) {
@@ -387,7 +387,7 @@ class Theme implements SetupInterface
 
         if (!empty($this->image_sizes_modify) || $this->default_image_size) {
             add_action('after_switch_theme', function () {
-                
+
                 // Set default image size.
                 if ($this->default_image_size) {
                     update_option('image_default_size', $this->default_image_size);
@@ -569,7 +569,7 @@ class Theme implements SetupInterface
 
             // Change URL to homepage.
     		add_filter( 'login_headerurl', function () {
-                return home_url(); 
+                return home_url();
             });
 
             add_action('login_enqueue_scripts', function () {
