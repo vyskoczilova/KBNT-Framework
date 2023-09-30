@@ -1,5 +1,7 @@
 # Changelog
 
+* Theme development related functions in CustomTheme class.
+
 ## 0.5.6 (2023-09-11)
 
 * Fix: no password reset emails to admin - [use correct filter](https://developer.wordpress.org/reference/functions/wp_password_change_notification/), don't disable it [for user](https://developer.wordpress.org/reference/hooks/send_password_change_email/).
