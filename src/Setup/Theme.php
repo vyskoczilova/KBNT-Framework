@@ -256,7 +256,7 @@ class Theme implements SetupInterface
         $this->addThemeSupport('automatic-feed-links');
         $this->addThemeSupport('post-thumbnails');
         $this->addThemeSupport('title-tag');
-        $this->addThemeSupport('html5');
+        $this->addThemeSupport('html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ));
         $this->disableGutenbergSvgInjection();
 
     }
@@ -380,12 +380,13 @@ class Theme implements SetupInterface
     /**
      * Add theme support
      * @param string $feature Feature name.
+     * @param mixed $args Feature args.
      * @return self
      */
-    public function addThemeSupport(string $feature)
+    public function addThemeSupport(string $feature, $args = false)
     {
         if (!in_array($feature, $this->add_theme_support)) {
-            $this->add_theme_support[] = $feature;
+            $this->add_theme_support[$feature] = $args;
         }
         return $this;
     }
@@ -485,8 +486,12 @@ class Theme implements SetupInterface
 
                 // Add theme support.
                 if (!empty($this->add_theme_support)) {
-                    foreach ($this->add_theme_support as $feature) {
-                        add_theme_support($feature);
+                    foreach ($this->add_theme_support as $feature => $args) {
+                        if ($args) {
+                            add_theme_support($feature, $args);
+                        } else {
+                            add_theme_support($feature);
+                        }
                     }
                 }
 
