@@ -124,6 +124,12 @@ class Theme implements SetupInterface
     private $remove_theme_support = [];
 
     /**
+     * Disable Gutenberg SVG injection
+     * @var bool
+     */
+    private $disable_gutenberg_svg_injection;
+
+    /**
      * Disable Bug fix decoding=async
      */
     public function disableBugFixDecodingAsync()
@@ -200,11 +206,25 @@ class Theme implements SetupInterface
         $this->menus[$slug] = \esc_html($name);
     }
 
+    /**
+     * Allow SVG
+     * @return void
+     */
     public function allowSvg()
     {
 
         $svg = new Svg();
         $svg->init();
+    }
+
+    /**
+     * Disable Gutenberg SVG injection
+     * @param bool $disable Disable Gutenberg SVG injection.
+     * @return void
+     */
+    public function disableGutenbergSvgInjection($disable = true)
+    {
+        $this->disable_gutenberg_svg_injection = $disable;
     }
 
     /**
@@ -227,6 +247,8 @@ class Theme implements SetupInterface
         $this->setImageQuality(100);
         $this->removeThemeSupport('core-block-patterns');
         $this->removeThemeSupport('block-templates');
+        $this->disableGutenbergSvgInjection();
+
     }
 
     /**
@@ -413,7 +435,7 @@ class Theme implements SetupInterface
         }
 
         // Theme supports.
-        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove || !empty($this->remove_theme_support)) {
+        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove || !empty($this->remove_theme_support || $this->disable_gutenberg_svg_injection)) {
             add_action('after_setup_theme', function () {
 
                 if ($this->theme_defaults) {
@@ -514,6 +536,14 @@ class Theme implements SetupInterface
                         }, 10, 2);
                     }
                 }
+
+
+                // Remove unwanted SVG filter injection WP.
+                if ($this->disable_gutenberg_svg_injection) {
+                    remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+                    remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
+                }
+
             });
 
             if ($this->image_sizes_add) {
