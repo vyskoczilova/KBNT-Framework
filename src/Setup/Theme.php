@@ -124,6 +124,12 @@ class Theme implements SetupInterface
     private $remove_theme_support = [];
 
     /**
+     * Add theme support
+     * @var array
+     */
+    private $add_theme_support = [];
+
+    /**
      * Disable Gutenberg SVG injection
      * @var bool
      */
@@ -234,6 +240,7 @@ class Theme implements SetupInterface
     public function setThemeDefaults()
     {
 
+        $this->theme_defaults = true;
         $this->disableAutoUpdateEmails();
         $this->disablePasswordResetEmails();
         $this->disableEditorFullscreenMode();
@@ -243,10 +250,13 @@ class Theme implements SetupInterface
         $this->removeImageSize('1536x1536');
         $this->removeImageSize('2048x2048');
         $this->sanitizeFileNames();
-        $this->theme_defaults = true;
         $this->setImageQuality(100);
         $this->removeThemeSupport('core-block-patterns');
         $this->removeThemeSupport('block-templates');
+        $this->addThemeSupport('automatic-feed-links');
+        $this->addThemeSupport('post-thumbnails');
+        $this->addThemeSupport('title-tag');
+        $this->addThemeSupport('html5');
         $this->disableGutenbergSvgInjection();
 
     }
@@ -368,6 +378,19 @@ class Theme implements SetupInterface
     }
 
     /**
+     * Add theme support
+     * @param string $feature Feature name.
+     * @return self
+     */
+    public function addThemeSupport(string $feature)
+    {
+        if (!in_array($feature, $this->add_theme_support)) {
+            $this->add_theme_support[] = $feature;
+        }
+        return $this;
+    }
+
+    /**
      * Initilize
      * @return void
      */
@@ -435,28 +458,13 @@ class Theme implements SetupInterface
         }
 
         // Theme supports.
-        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove || !empty($this->remove_theme_support || $this->disable_gutenberg_svg_injection)) {
+        if (!empty($this->menus) || $this->theme_defaults || $this->textdomain || $this->image_sizes_add || $this->image_sizes_remove || !empty($this->remove_theme_support || !empty($this->add_theme_support) || $this->disable_gutenberg_svg_injection)) {
             add_action('after_setup_theme', function () {
 
                 if ($this->theme_defaults) {
 
-                    // Add default posts and comments RSS feed links to head.
-                    add_theme_support('automatic-feed-links');
-
                     // Add excerpt for pages.
                     add_post_type_support('page', 'excerpt');
-
-                    // This feature enables plugins and themes to manage the document title tag. This should be used in place of wp_title() function.
-                    add_theme_support('title-tag');
-
-                    // Enable support for Post Thumbnails on posts and pages.
-                    add_theme_support('post-thumbnails');
-
-                    // Support HTML5
-                    add_theme_support(
-                        'html5',
-                        ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script']
-                    );
 
                     // Don't load unnecessary CSS for WPML.
                     if (!defined('ICL_DONT_LOAD_NAVIGATION_CSS')) {
@@ -472,6 +480,13 @@ class Theme implements SetupInterface
                 if (!empty($this->remove_theme_support)) {
                     foreach ($this->remove_theme_support as $feature) {
                         remove_theme_support($feature);
+                    }
+                }
+
+                // Add theme support.
+                if (!empty($this->add_theme_support)) {
+                    foreach ($this->add_theme_support as $feature) {
+                        add_theme_support($feature);
                     }
                 }
 
