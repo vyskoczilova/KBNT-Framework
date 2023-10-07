@@ -14,7 +14,7 @@ class CustomTheme {
 
     /**
      * Get Assets manifest if exists.Cu
-     * @return string
+     * @return array
      */
     public static function getAssetsManifest() {
         $manifest_path = get_template_directory() . '/assets/rev-manifest.json';
@@ -24,6 +24,20 @@ class CustomTheme {
         }
 
         return [];
+    }
+
+    /**
+     * Get path to icons SVG sprite including versions.
+     * @return string
+     */
+    public static function getIconsSprite() {
+        $sprite_path = get_template_directory() . '/assets/img/sprite.svg';
+
+        if (file_exists($sprite_path)) {
+            return get_template_directory_uri() . '/assets/img/sprite.svg?ver=' . filemtime(get_template_directory() . '/assets/img/sprite.svg');
+        }
+
+        return '';
     }
 
 }
