@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.5.7 (2023-10-09)
+
 * Theme development related functions in CustomTheme class.
 * Disable unvanted Gutenberg SVG injection as theme default.
 * Add theme support
