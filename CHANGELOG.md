@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.8 (2023-11-30)
+
+* Update composer dependencies.
+
 ## 0.5.7 (2023-10-09)
 
 * Theme development related functions in CustomTheme class.
