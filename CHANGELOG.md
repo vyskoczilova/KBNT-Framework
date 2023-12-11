@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.9 (2023-12-11)
+
+* Add support for scripts loading strategies.
+* Update composer dependencies.
+
 ## 0.5.8 (2023-11-30)
 
 * Update composer dependencies.

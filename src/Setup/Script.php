@@ -18,6 +18,12 @@ class Script extends StyleScript {
     private $in_footer = true; // My custom.
 
     /**
+     * Loading strategy
+     * @var string
+     */
+    private $strategy;
+
+    /**
      * Localize
      * @var array
      */
@@ -36,6 +42,23 @@ class Script extends StyleScript {
 
         return $this;
     }
+
+    /**
+     * Set loading strategy
+     *
+     * @return  string
+     */
+    public function setStrategy(string $strategy)
+    {
+        if (!in_array($strategy, ['defer', 'async'])) {
+            throw new \Exception('Strategy must be defer or async');
+        }
+
+        $this->strategy = $strategy;
+
+        return $this;
+    }
+
 
     /**
      * Set localize
@@ -57,7 +80,15 @@ class Script extends StyleScript {
      */
     public function getParameters()
     {
-        return [$this->getHandle(), $this->getSrc(), $this->deps, $this->getVersion(), $this->in_footer];
+        $args = [
+            'in_footer' => $this->in_footer,
+        ];
+
+        if ($this->strategy !== null) {
+           $args['strategy'] = $this->strategy;
+        }
+
+        return [$this->getHandle(), $this->getSrc(), $this->deps, $this->getVersion(), $args];
     }
 
     /**
