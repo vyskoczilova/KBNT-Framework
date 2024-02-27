@@ -27,14 +27,14 @@ class FluentForms implements SetupInterface
     {
 
         if ($this->do_shortcode_tnc) {
-            add_filter('fluentform_rendering_field_data_terms_and_condition', function ($data, $form) {
+            add_filter('fluentform/rendering_field_data_terms_and_condition', function ($data, $form) {
                 $data['settings']['tnc_html'] = \do_shortcode($data['settings']['tnc_html']);
                 return $data;
             }, 10, 3);
         }
 
         if ($this->keep_one_ip_only) {
-            add_filter('fluentform_filter_insert_data', function ($response) {
+            add_filter('fluentform/filter_insert_data', function ($response) {
                 if (isset($response['ip'])) {
                     $response['ip'] = explode(',', $response['ip'])[0]; // Keep only first IP address (remove all others).
                 }
@@ -61,7 +61,7 @@ class FluentForms implements SetupInterface
     /**
      * Set keep one IP instead of multiple commaseparated IPs by default (needs to be revised in further Fluent Forms versions)
      * @param bool $keep_one_ip_only Enable/disable settings.
-     * @return self 
+     * @return self
      */
     public function setKeepOneIpOnly(bool $keep_one_ip_only = true)
     {

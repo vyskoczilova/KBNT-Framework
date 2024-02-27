@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.10 (2024-02-27)
+
+* Fix SVG render metadata
+* Fix update FF deprecated filters
+
 ## 0.5.9 (2023-12-11)
 
 * Add support for scripts loading strategies.
