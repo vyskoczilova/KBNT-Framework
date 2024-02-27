@@ -37,6 +37,7 @@ class Svg
         add_filter('wp_prepare_attachment_for_js', array($this, 'add_svg_sizes'), 10, 3);
         add_filter('wp_check_filetype_and_ext', array($this, 'fix_mime_type_svg'), 75, 4);
         add_filter('wp_handle_upload_prefilter', array($this, 'check_for_svg'));
+        add_filter( 'wp_generate_attachment_metadata', array( $this, 'attachment_meta' ), 10, 2 );
     }
 
     /**
@@ -214,8 +215,76 @@ class Svg
         }
 
         return (object) array(
-            'width'  => $width,
-            'height' => $height,
+            'width'  => intval($width),
+            'height' => intval($height),
         );
+    }
+
+    /**
+     * Create Attachment meta for svg files.
+     *
+     * @param int $attachment_id Attachment Id to process.
+     * @param string $file Filepath of the Attached image.
+     *
+     * @return mixed Metadata for attachment.
+     */
+    function attachment_meta( $metadata, $attachment_id ) {
+        $mime = get_post_mime_type( $attachment_id );
+        if ( 'image/svg+xml' === $mime ) {
+            $additional_image_sizes = wp_get_additional_image_sizes();
+            $svg_path               = get_attached_file( $attachment_id );
+            $upload_dir             = wp_upload_dir();
+            // get the path relative to /uploads/ - found no better way:
+            $relative_path = str_replace( trailingslashit( $upload_dir['basedir'] ), '', $svg_path );
+            $filename      = basename( $svg_path );
+
+            $dimensions = $this->get_dimensions( $svg_path );
+
+            if ( ! $dimensions ) {
+                return $metadata;
+            }
+
+            $metadata = array(
+                'width'  => intval( $dimensions->width),
+                'height' => intval( $dimensions->height ),
+                'file'   => $relative_path
+            );
+
+            // Might come handy to create the sizes array too - But it's not needed for this workaround! Always links to original svg-file => Hey, it's a vector graphic! ;)
+            $sizes = array();
+            foreach ( get_intermediate_image_sizes() as $s ) {
+                $sizes[ $s ] = array( 'width' => '', 'height' => '', 'crop' => false );
+
+                if ( isset( $additional_image_sizes[ $s ]['width'] ) ) {
+                    // For theme-added sizes
+                    $sizes[ $s ]['width'] = intval( $additional_image_sizes[ $s ]['width'] );
+                } else {
+                    // For default sizes set in options
+                    $sizes[ $s ]['width'] = get_option( "{$s}_size_w" );
+                }
+
+                if ( isset( $additional_image_sizes[ $s ]['height'] ) ) {
+                    // For theme-added sizes
+                    $sizes[ $s ]['height'] = intval( $additional_image_sizes[ $s ]['height'] );
+                } else {
+                    // For default sizes set in options
+                    $sizes[ $s ]['height'] = get_option( "{$s}_size_h" );
+                }
+
+                if ( isset( $additional_image_sizes[ $s ]['crop'] ) ) {
+                    // For theme-added sizes
+                    $sizes[ $s ]['crop'] = intval( $additional_image_sizes[ $s ]['crop'] );
+                } else {
+                    // For default sizes set in options
+                    $sizes[ $s ]['crop'] = get_option( "{$s}_crop" );
+                }
+
+                $sizes[ $s ]['file']      = $filename;
+                $sizes[ $s ]['mime-type'] = $mime;
+            }
+            $metadata['sizes'] = $sizes;
+        }
+
+        return $metadata;
     }
 }
